@@ -13,7 +13,7 @@
 | May 28, 2015  | Ella  |  New File | genTauPrime  | Master  | Add function to generate tau prime using non-critical reactions for j'  |  Integrating in main program |
 | May 28, 2015 |  Ella | New File  | genTauDoublePrime  | Master  | Add function to generate tau double prime using exponential distribution  | Integrating in main program  |
 |  May 28, 2015 | Ella  |New File   |  SSATestModifiedTau | Master  | Main program for modified tau leaping | Adding changes to X due to reactions during tau leap  |
-|   |   |   |   |   |   |   |
+|  May 28, 2015 |  Ella |  New File | amountChanges  | Master  |Generates the changes in amount of each substance during a give time period, tau   |  Error being generated when used with the genRj function (producing an empty matrix)  |
 |   |   |   |   |   |   |   |
 |   |   |   |   |   |   |   |
 |   |   |   |   |   |   |   |
