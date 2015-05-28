@@ -1,7 +1,7 @@
 close all
 clear all
 clc 
-
+tic
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Programmed by: Ella Thomson
 % Tracks the changes in amounts of three chemical reactants involved in
@@ -50,36 +50,36 @@ for n = 1:num_sims
                 Vj = V(j,:); % retrieve V values for the selected reaction
                 X0 = X0 + Vj; % get new X0 value
                 X = [X; X0]; % store all X values in a matrix
-                count = count+time;
+                count = time;
             end
     
         else
             % generate tau double prime
-            [tau_double_prime] = genTauDoublePrime(aj, Rj);   
-        end
+            [tau_double_prime] = genTauDoublePrime(aj, Rjs);   
  
-        
-        if tau_prime < tau_double_prime 
-            tau = tau_prime;
-            [X0 
+            % generate changes to species amounts from reactions during tau
+             if tau_prime < tau_double_prime 
+                tau = tau_prime;
+                [X0] = amountChanges(X0, aj, V, num_rxns, tau, Rjs);
               
-        else
-            tau = tau_double_prime;
-        end
+             else
+                tau = tau_double_prime;
+             end
         
-        time = time + tau; % find new time by adding tau to previous time
-        times = [times time]; % add new time to list of times
-        X = [X; X0]; % store all X values in a matrix
-        count = time; % increment number of reactions
+            time = time + tau; % find new time by adding tau to previous time
+            times = [times time]; % add new time to list of times
+            X = [X; X0]; % store all X values in a matrix
+            count = time; % increment number of reactions
+        end
     end
-end
+
 
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % The below code is for plotting, which only occurs is no substances have
     % run out during the preset number of reactions.
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %{
+    
     type_plots_b = {'b-', 'b*', 'bd', 'bp', 'bh'};
     type_plots_r = {'r-', 'r*', 'rd', 'rp', 'rh'};
     type_plots_k = {'k-', 'k*', 'kd', 'kp', 'kh'};
@@ -112,5 +112,5 @@ end
         hold on 
 
     end
-end 
-    %}
+end
+toc
