@@ -68,7 +68,7 @@ for n = 1:num_sims
                 tau = tau_double_prime;
                 % amount each species changes if tau is tau double prime
                 % (only one critical reaction can occur) 
-                [X0] = amountChangesDouble(X0, aj, V, num_rxns, tau, Rjs);
+                [X0] = amountChangesDouble(X0, aj, V, tau, Rjs);
              end
         
             time = time + tau; % find new time by adding tau to previous time
