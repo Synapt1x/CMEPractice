@@ -37,7 +37,7 @@ for n = 1:num_sims
         [Rjs] = genRj (X0, V); 
     
         [tau_prime, a_0, aj] = genTauPrime (Rjs, V, X0);
-        
+        disp(aj)
         compare = 10 * (1/a_0);
         
         if tau_prime < compare
@@ -60,10 +60,15 @@ for n = 1:num_sims
             % generate changes to species amounts from reactions during tau
              if tau_prime < tau_double_prime 
                 tau = tau_prime;
+                % amount each species changes if tau is selected as tau
+                % prime
                 [X0] = amountChanges(X0, aj, V, num_rxns, tau, Rjs);
               
              else
                 tau = tau_double_prime;
+                % amount each species changes if tau is tau double prime
+                % (only one critical reaction can occur) 
+                [X0] = amountChangesDouble(X0, aj, V, num_rxns, tau, Rjs);
              end
         
             time = time + tau; % find new time by adding tau to previous time
