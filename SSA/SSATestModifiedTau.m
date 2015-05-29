@@ -11,9 +11,6 @@ tic
 % and one figure with all three substances on the same plot. 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Notes: The whole program takes approcimately 45-55 seconds to run 5
-% simulations up to 0.09 seconds each
-
 prompt = 'How many simulations would you like to run?';
 num_sims = input(prompt);
  
@@ -37,13 +34,12 @@ for n = 1:num_sims
         [Rjs] = genRj (X0, V); 
     
         [tau_prime, a_0, aj] = genTauPrime (Rjs, V, X0);
-        disp(aj)
+
         compare = 10 * (1/a_0);
         
         if tau_prime < compare
             % generate 100 individual SSA steps
-            for ssaSteps = 1:100
-                % this loop is causing the amounts of species to drop below 0, because there is no control
+            for ssaSteps = 1:10
                 [tau, j] = TauAndJGen (aj);
                 time = time + tau; % find new time by adding tau to previous time
                 times = [times time]; % add new time to list of times
@@ -78,17 +74,10 @@ for n = 1:num_sims
             count = time; % increment number of reactions
         end
     end
-
-
-
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % The below code is for plotting, which only occurs is no substances have
-    % run out during the preset number of reactions.
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
-    type_plots_b = {'b-', 'b*', 'bd', 'bp', 'bh'};
-    type_plots_r = {'r-', 'r*', 'rd', 'rp', 'rh'};
-    type_plots_k = {'k-', 'k*', 'kd', 'kp', 'kh'};
+    type_plots_b = {'b-', 'b*', 'bd', 'bp', 'bh', 'b^'};
+    type_plots_r = {'r-', 'r*', 'rd', 'rp', 'rh', 'r^'};
+    type_plots_k = {'k-', 'k*', 'kd', 'kp', 'kh', 'k^'};
     
     if go_ahead ==1 % check if plotting will occur
         figure(1) 
