@@ -43,6 +43,7 @@ for n = 1:num_sims
         if tau_prime < compare
             % generate 100 individual SSA steps
             for ssaSteps = 1:100
+                % this loop is causing the amounts of species to drop below 0, because there is no control
                 [tau, j] = TauAndJGen (aj);
                 time = time + tau; % find new time by adding tau to previous time
                 times = [times time]; % add new time to list of times
