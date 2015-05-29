@@ -15,7 +15,7 @@
 |  May 28, 2015 | Ella  |New File   |  SSATestModifiedTau | Master  | Main program for modified tau leaping | Adding changes to X due to reactions during tau leap  |
 |  May 28, 2015 |  Ella |  New File | amountChanges  | Master  |Generates the changes in amount of each substance during a give time period, tau   |  Error being generated when used with the genRj function (producing an empty matrix)  |
 | May 28, 2015  | Ella  | Revision  | SSATestModifiedTau  | Master  | Added changes in x due to reactions when tau prime is used for tau | Add changes in x due to reactions when tau double prime is used for tau. Check to make sure reactants are not running out.  |
-|   |   |   |   |   |   |   |
+| May 29, 2015  | Ella |  New File | amountChangesDouble  | Master  | Generates changes in amounts of each species if tau is selected as tau double prime. One non-critical reaction occurs  | Integrating function in main program  |
 |   |   |   |   |   |   |   |
 |   |   |   |   |   |   |   |
 
