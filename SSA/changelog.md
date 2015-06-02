@@ -19,3 +19,4 @@
 | May 29, 2015  | Ella  | Revision  | SSATestModifiedTau  | Master  | Includes integration of function for changes in amounts of each species if tau = tau double prime  | Amounts of species is still going below 0  |
 | May 29, 2015  | Ella  | Revision  | SSATestModifiedTau  | Master  | Reduced number of SSA steps to prevent amount of species from dropping below zero  | Test different numbers of SSA steps  (ie 30, 5) |
 | June 2, 2015 | Ella |Revision| SSATestModifiedTau | Master | Changed number of SSA steps to 20| The time is going over the max time defined at the beginning of the program|
+| June 2, 2015 | Ella | New File | genEis | Master | Add function to generate epsilon value for each species (to be used for binomial tau leaping) | Integrate with main program. Input orders of each reaction instead of calculating in the program|
