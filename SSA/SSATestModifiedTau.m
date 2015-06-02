@@ -11,9 +11,11 @@ tic
 % and one figure with all three substances on the same plot. 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% user chooses how many simulations to run
 prompt = 'How many simulations would you like to run?';
 num_sims = input(prompt);
  
+% user chooses the maximum time for each simulation
 prompt = 'What is the maximum time? (less than 0.07 seconds)';
 max_rx = input(prompt) ;
 
@@ -21,7 +23,7 @@ for n = 1:num_sims
     % asks the user how many reactions they want to track
 
     go_ahead = 1; % will be tested to determine whether to plot
-    count = 0;
+    count = 0; % start each simulation with reaction time = 0
 
     % call intialize parameters to define ititial time and concentrations
     [time, times, X0, X, num_rx, c, V, num_species] = InitializeParameters ();
@@ -33,13 +35,15 @@ for n = 1:num_sims
         % identify all critical reactions
         [Rjs] = genRj (X0, V); 
     
+        % generate one estimate for tau 
         [tau_prime, a_0, aj] = genTauPrime (Rjs, V, X0);
 
+        % comparison for the bound of tau
         compare = 10 * (1/a_0);
         
         if tau_prime < compare
             % generate 100 individual SSA steps
-            for ssaSteps = 1:10
+            for ssaSteps = 1:20
                 [tau, j] = TauAndJGen (aj);
                 time = time + tau; % find new time by adding tau to previous time
                 times = [times time]; % add new time to list of times
@@ -59,7 +63,7 @@ for n = 1:num_sims
                 tau = tau_prime;
                 % amount each species changes if tau is selected as tau
                 % prime
-                [X0] = amountChanges(X0, aj, V, num_rxns, tau, Rjs);
+                [X0] = amountChanges(X0, aj, V, num_rx, tau, Rjs);
               
              else
                 tau = tau_double_prime;
@@ -75,6 +79,7 @@ for n = 1:num_sims
         end
     end
     
+    % plotting symbols for different simulation runs 
     type_plots_b = {'b-', 'b*', 'bd', 'bp', 'bh', 'b^'};
     type_plots_r = {'r-', 'r*', 'rd', 'rp', 'rh', 'r^'};
     type_plots_k = {'k-', 'k*', 'kd', 'kp', 'kh', 'k^'};
