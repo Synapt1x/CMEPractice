@@ -1,9 +1,9 @@
-%function [eis] = genEis (epsilon, V, X, numSpeciesm, numRx)
-numSpecies = 3;
-numRx = 3;
-epsilon = 0.05;
-V = [-1 -1 1; -1 1 -1; 1 -2 0]; % v values for all reactions
-X = [1 2 3; 40 40 20];
+function [eis] = genEis (epsilon, V, X, numSpecies, numRx)
+%numSpecies = 3;
+%numRx = 3;
+%epsilon = 0.05;
+%V = [-1 -1 1; -1 1 -1; 1 -2 0]; % v values for all reactions
+%X = [1 2 3; 40 40 20];
 orders = []; % blank vector to store the order of each reaction
 % it may be possible to input the orders as a vector. The reactions are not
 % changing and this will reduce the time required to calculate the orders
@@ -32,29 +32,31 @@ for species = 1:numSpecies % loop through ei values for all species
     orderInd = find(orders == orderSpec); % num of reaction with maximum order
     Xi = currentX(species); % current amount of one species
     
-    if orderSpec == 1 % maximum order of reaction for species is 1
+    
+    switch orderSpec
+        case 1 % maximum order of reaction for species is 1
         gi = 1;
-    elseif orderSpec ==2 % maximum order of reaction for species is 2
-        if allOrdPos(orderInd) > 1 % two parts of species used in 1 rxn
-           gi = 2+(1/(Xi-1));
-        else
-            gi = 2;
-        end
-    elseif orderSpec ==3 % maximum order of reaction for species is 3
-        if allOrdPos(orderInd) >2 % three parts of species used in 1 rxn
-            gi = 3+(1/(Xi-1)) + (2/(Xi-2));
-        elseif allOrdPos(orderInd) >1 % two parts of species used in 1 rxn
-            gi = (3/2) * (2+(1/(Xi-1)));
-        else
-            gi = 3;
-        end
+        case 2 % maximum order of reaction for species is 2
+            if allOrdPos(orderInd) > 1 % two parts of species used in 1 rxn
+                gi = 2+(1/(Xi-1));
+            else
+                gi = 2;
+            end
+        case 3 % maximum order of reaction for species is 3
+            if allOrdPos(orderInd) >2 % three parts of species used in 1 rxn
+                gi = 3+(1/(Xi-1)) + (2/(Xi-2));
+            elseif allOrdPos(orderInd) >1 % two parts of species used in 1 rxn
+                gi = (3/2) * (2+(1/(Xi-1)));
+            else
+                gi = 3;
+            end
     end
     gis(species) = gi; % store gi value for this species
 end
 
 eis = epsilon ./ gis; % calculate eis for each species
            
-        
+disp(gis) 
     
 
 
