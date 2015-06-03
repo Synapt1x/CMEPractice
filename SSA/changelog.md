@@ -22,5 +22,5 @@
 | June 2, 2015 | Ella | New File | genEis | Master | Add function to generate epsilon value for each species (to be used for binomial tau leaping) | Integrate with main program. Input orders of each reaction instead of calculating in the program|
 | June 2, 2015 | Ella | Revision | genEis | Master | Change to using case instead of if statements. Will allow for higher order reactions to be added later if needed | Integrating with main program | 
 | June 3, 2015 | Ella | Revision | genEis | Master | Add an output of gis since it is required for the tau prime generation | Integrating with main program | 
-| June 3, 2015 | Ella | New File | SSATestTauBinomial | Master | Uses new method for calculating tau prime | Increasing speed for longer time periods | 
-| June 3, 2015 | Ella | New File | genMeanVar | Master | Generate tau prime using new method | Checking the formulas for the max term in the means and variances |
+| June 3, 2015 | Ella | New File | SSATestTauBinomial | Master | Uses new method for calculating tau prime | Increasing speed for longer time periods. Enabling longer time periods | 
+| June 3, 2015 | Ella | New File | genMeanVar | Master | Generate tau prime using new method | Checking the formulas for the max term in the means and variances|
