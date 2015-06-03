@@ -1,4 +1,4 @@
-function [eis] = genEis (epsilon, V, X, numSpecies, numRx)
+function [eis, gis] = genEis (epsilon, V, X, numSpecies, numRx)
 %numSpecies = 3;
 %numRx = 3;
 %epsilon = 0.05;
