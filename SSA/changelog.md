@@ -26,3 +26,4 @@
 | June 3, 2015 | Ella | New File | genMeanVar | Master | Generate tau prime using new method | Checking the formulas for the max term in the means and variances|
 | June 4, 2015 | Ella | Revision | genMeanVar | Master | Changed equations for mean and variance so that the search for "max" only checks the top term | Increasing speed | 
 | June 4, 2015 | Ella | New File | evalDerivs | Master | Evaluates the derivatives for the reactions | Implementing in main program | 
+| June 4, 2015 | Ella | Revision | genMeanVar | Master | Removes the derivative evaluations, and instead receives the partial derivatives as inputs in a cell | Implementing in main program | 
