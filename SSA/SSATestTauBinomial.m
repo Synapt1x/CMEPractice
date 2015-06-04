@@ -40,7 +40,7 @@ for n = 1:num_sims
         [tau_prime, a_0, aj] = genMeanVar (Rjs, V, X0, eis, gis);
 
         % comparison for the bound of tau
-        compare = 10 * (1/a_0);
+        compare = 5 * (1/a_0); % try different multiples (less than 10)
         
         if tau_prime < compare
             % generate 100 individual SSA steps
