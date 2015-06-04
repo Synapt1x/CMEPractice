@@ -17,7 +17,8 @@ num_sims = input(prompt);
  
 % user chooses the maximum time for each simulation
 prompt = 'What is the maximum time? (less than 0.07 seconds)';
-max_rx = input(prompt) ;
+max_rx = input(prompt);
+[all_rxns] = derivEvals (); % evaluate derivatives for all equations 
 
 for n = 1:num_sims
     % asks the user how many reactions they want to track
@@ -28,20 +29,18 @@ for n = 1:num_sims
     % call intialize parameters to define ititial time and concentrations
     [time, times, X0, X, num_rx, c, V, num_species] = InitializeParameters ();
 
- 
-
     while count <max_rx;
         
         % identify all critical reactions
         [Rjs] = genRj (X0, V); 
     
         % generate one estimate for tau 
+        
         [eis, gis] = genEis (0.03, V, X, num_species, num_rx);
-        [tau_prime, a_0, aj] = genMeanVar (Rjs, V, X0, eis, gis);
+        [tau_prime, a_0, aj] = genMeanVar (Rjs, V, X0, eis, gis, all_rxns);
 
         % comparison for the bound of tau
-        compare = 5 * (1/a_0); % try different multiples (less than 10)
-        % tau_prime is being computed as a very small value 
+        compare = 5 * (1/a_0);
         
         if tau_prime < compare
             % generate 100 individual SSA steps
