@@ -61,8 +61,18 @@ end
 % I am not sure if the formular for the maximum terms is correctly used
 % here. Is the maximum just for the top part of the term or the whole term?
 
-meanTerm =max((eis./ gis)./ (abs(mean))); % the maximum of the mean terms
-varTerm = max (((eis./gis).^2) ./ var); % the maximum of the variance terms
+eg = eis./gis;
+egs = (eis./ gis).^2;
+
+meanNum =max(eg);
+indMean = find(eg == meanNum);
+meanTerm = meanNum./ (abs(mean(indMean))); % the maximum of the mean terms
+
+varNum = max (egs);
+indVar = find(egs == varNum);
+varTerm = varNum ./ (var(indVar)); % the maximum of the variance terms
+
+
 bothTerms = [meanTerm varTerm];
 tauPrime = min(bothTerms); % tau prime is minimum of above two terms 
 
