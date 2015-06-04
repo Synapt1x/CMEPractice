@@ -27,3 +27,4 @@
 | June 4, 2015 | Ella | Revision | genMeanVar | Master | Changed equations for mean and variance so that the search for "max" only checks the top term | Increasing speed | 
 | June 4, 2015 | Ella | New File | evalDerivs | Master | Evaluates the derivatives for the reactions | Implementing in main program | 
 | June 4, 2015 | Ella | Revision | genMeanVar | Master | Removes the derivative evaluations, and instead receives the partial derivatives as inputs in a cell | Implementing in main program | 
+| June 4, 2015 | Ella | Revision | SSATestTauBinomial | Master | Moves derivative calculations to outside main loop. Increases speed | Stress testing | 
