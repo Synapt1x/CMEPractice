@@ -11,4 +11,4 @@ The stochastic simulation algorithm (SSA) was setup as described in Gillespie (2
 
 ## *&#964;*-leaping
 
-Practice incorporating *&#964;*-leaping into the ssa to facilitate efficient simulation for larger and/or more complicated systems. Different schemes for *&#964;* generation were tested and compared. These schemes were taken from Cao et al (2006). 
+Practice incorporating *&#964;*-leaping into the ssa to facilitate efficient simulation for larger and/or more complicated systems. Different schemes for *&#964;* generation were tested and compared, including poisson and binomial distribtuion. These schemes were taken from Cao et al (2006). 
