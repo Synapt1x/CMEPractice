@@ -41,6 +41,7 @@ for n = 1:num_sims
 
         % comparison for the bound of tau
         compare = 5 * (1/a_0); % try different multiples (less than 10)
+        % tau_prime is being computed as a very small value 
         
         if tau_prime < compare
             % generate 100 individual SSA steps
