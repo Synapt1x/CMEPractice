@@ -2,7 +2,7 @@ function [tauPrime, a_0, aj] = genMeanVar (Rjs, V, X0, eis, gis, all_rxns)
 
 %V = [-1 -1 1; -1 1 -1; 1 -2 0];
 %Rjs = [0 0 0];
-numReactions = 3;
+
 numSpecies = 3;
 %eis = 0.025 * (ones(1, 3));
 %gis = [2 2 2]; 
@@ -12,8 +12,8 @@ species2 = X0(2); % amount of x2
 species3 = X0(3); % amount of y
 
 
-a_0 = single(sum(all_rxns(species1,species2,species3))); % a0 is sum of all aj's
 aj = single(all_rxns(species1,species2,species3));
+a_0 = sum(aj);
 
 % zero out products, so only Vij's for reactants are left
 indsReac = find(V > 0); % products will have positive v values
