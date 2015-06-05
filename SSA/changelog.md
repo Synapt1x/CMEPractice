@@ -30,3 +30,4 @@
 | June 4, 2015 | Ella | Revision | SSATestTauBinomial | Master | Moves derivative calculations to outside main loop. Increases speed | Stress testing | 
 | June 5, 2015 | Ella | Revision | SSATestTauBinomial | Master | | Getting stuck in symbolic calculations |
 | June 5, 2015 | Ella | Revision | genRj| Checking whether lj is empty | Getting Stuck|
+| June 5, 2015 | Ella | New File | TauAndJGen | | | 
