@@ -12,13 +12,13 @@ tic
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % user chooses how many simulations to run
-prompt = 'How many simulations would you like to run?';
-num_sims = input(prompt);
+%prompt = 'How many simulations would you like to run?';
+num_sims = 2;
  
 % user chooses the maximum time for each simulation
-prompt = 'What is the maximum time?';
-max_rx = input(prompt);
-[all_rxns] = derivEvals (); % evaluate derivatives for all equations 
+%prompt = 'What is the maximum time? (less than 0.07 seconds)';
+max_rx = 0.4;
+all_rxns = derivEvals (); % evaluate derivatives for all equations 
 
 for n = 1:num_sims
     % asks the user how many reactions they want to track
@@ -29,10 +29,10 @@ for n = 1:num_sims
     % call intialize parameters to define ititial time and concentrations
     [time, times, X0, X, num_rx, c, V, num_species] = InitializeParameters ();
 
-    while count <max_rx;
+    while count <=max_rx;
         
         % identify all critical reactions
-        [Rjs] = genRj (X0, V); 
+        [Rjs] = genRj (X0, V, all_rxns); 
     
         % generate one estimate for tau 
         
@@ -113,5 +113,6 @@ for n = 1:num_sims
         hold on 
 
     end
+    disp(n)
 end
 toc
