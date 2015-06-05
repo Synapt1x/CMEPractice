@@ -18,7 +18,7 @@ X = X0;
 
 num_rx = 3; % the number of different chemical reactions
 
-c = [2 1 2]; % a vector to store the reaction rates of each reaction 
+c = [.02 .01 .02]; % a vector to store the reaction rates of each reaction 
 
 V = [-1 -1 1; -1 1 -1; 1 -2 0]; % amount of species consumed all reactions
 

@@ -1,7 +1,6 @@
-close all
-clear all
-clc 
+function SSATestTauBinomial
 tic
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Programmed by: Ella Thomson
 % Tracks the changes in amounts of three chemical reactants involved in
@@ -17,7 +16,7 @@ num_sims = 2;
  
 % user chooses the maximum time for each simulation
 %prompt = 'What is the maximum time? (less than 0.07 seconds)';
-max_rx = 0.4;
+max_rx = 10;
 all_rxns = derivEvals (); % evaluate derivatives for all equations 
 
 for n = 1:num_sims
@@ -32,7 +31,7 @@ for n = 1:num_sims
     while count <=max_rx;
         
         % identify all critical reactions
-        [Rjs] = genRj (X0, V, all_rxns); 
+        Rjs = genRj (X0, V, all_rxns); 
     
         % generate one estimate for tau 
         
@@ -113,6 +112,5 @@ for n = 1:num_sims
         hold on 
 
     end
-    disp(n)
 end
 toc

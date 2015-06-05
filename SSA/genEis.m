@@ -55,8 +55,6 @@ for species = 1:numSpecies % loop through ei values for all species
 end
 
 eis = epsilon ./ gis; % calculate eis for each species
-           
-disp(gis) 
     
 
 

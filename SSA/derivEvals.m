@@ -3,9 +3,9 @@ function [all_rxns] = derivEvals ()
 syms x1; % symbolic variable for x1
 syms x2; % symbolic variable for x2
 syms y; % symbolic variable for y
-c1 = 2; % reaction rate of reaction 1
-c2 = 1; % reaction rate of reaction 2 
-c3 = 2; % reaction ate of reaction 3 
+c1 = .02; % reaction rate of reaction 1
+c2 = .01; % reaction rate of reaction 2 
+c3 = .02; % reaction ate of reaction 3 
 
 syms f(x1,x2,y); %a for reaction 1 (symbolic)
 syms g(x1,x2,y); %a for reaction 2 (symbolic)

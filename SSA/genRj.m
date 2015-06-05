@@ -80,11 +80,14 @@ for x = 1:3 % generates an lj value for each reaction
     V_to_check = Vs(ind); % finds vs of indexes determined above
     
     Ls = ceil(x_to_check ./ abs(V_to_check)); % find lj for all elements
-    if length(Ls) ~= 0
+    if ~isempty(Ls) %check to see if Ljs is empty
         Ljs(x) = min(Ls); % find lj for one reaction and store it (minimum Lj value)
     else
-        Ljs(x) = nc+1;
+        Ljs(x) = nc;
     end
+%     else
+%         Ljs(x) = nc+1;
+%     end
 
 end
 
