@@ -28,3 +28,5 @@
 | June 4, 2015 | Ella | New File | evalDerivs | Master | Evaluates the derivatives for the reactions | Implementing in main program | 
 | June 4, 2015 | Ella | Revision | genMeanVar | Master | Removes the derivative evaluations, and instead receives the partial derivatives as inputs in a cell | Implementing in main program | 
 | June 4, 2015 | Ella | Revision | SSATestTauBinomial | Master | Moves derivative calculations to outside main loop. Increases speed | Stress testing | 
+| June 5, 2015 | Ella | Revision | SSATestTauBinomial | Master | | Getting stuck in symbolic calculations |
+| June 5, 2015 | Ella | Revision | genRj| Checking whether lj is empty | Getting Stuck|
