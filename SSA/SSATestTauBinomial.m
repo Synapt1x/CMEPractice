@@ -1,6 +1,5 @@
 function SSATestTauBinomial
 tic
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Programmed by: Ella Thomson
 % Tracks the changes in amounts of three chemical reactants involved in
@@ -11,31 +10,30 @@ tic
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % user chooses how many simulations to run
-%prompt = 'How many simulations would you like to run?';
-num_sims = 2;
+num_sims = 6;
  
 % user chooses the maximum time for each simulation
-%prompt = 'What is the maximum time? (less than 0.07 seconds)';
-max_rx = 10;
-all_rxns = derivEvals (); % evaluate derivatives for all equations 
+max_rx = 20;
 
-for n = 1:num_sims
-    % asks the user how many reactions they want to track
+% evaluate derivatives for all equations. Returns a vector of 3 symbolic
+% equations (one for each reaction). Values will be plugged in to the
+% symbolic equations to calculate the aj for each reaction 
+all_rxns = derivEvals (); 
 
-    go_ahead = 1; % will be tested to determine whether to plot
+for n = 1:num_sims % loop through all simulations. Plot after each sim
+    
     count = 0; % start each simulation with reaction time = 0
 
     % call intialize parameters to define ititial time and concentrations
-    [time, times, X0, X, num_rx, c, V, num_species] = InitializeParameters ();
+    [time, times, X0, X, num_rx, V, num_species] = InitializeParameters ();
 
-    while count <=max_rx;
+    while count <=max_rx; % loop through tau steps until max time is reached
         
         % identify all critical reactions
         Rjs = genRj (X0, V, all_rxns); 
     
         % generate one estimate for tau 
-        
-        [eis, gis] = genEis (0.03, V, X, num_species, num_rx);
+        [eis, gis] = genEis (0.05, V, X, num_species, num_rx);
         [tau_prime, a_0, aj] = genMeanVar (Rjs, V, X0, eis, gis, all_rxns);
 
         % comparison for the bound of tau
@@ -83,34 +81,33 @@ for n = 1:num_sims
     type_plots_b = {'b-', 'b*', 'bd', 'bp', 'bh', 'b^'};
     type_plots_r = {'r-', 'r*', 'rd', 'rp', 'rh', 'r^'};
     type_plots_k = {'k-', 'k*', 'kd', 'kp', 'kh', 'k^'};
+ 
+    figure(1) 
     
-    if go_ahead ==1 % check if plotting will occur
-        figure(1) 
-    
-        % first plot displays x1 amount vs time
-        subplot(3,1,1)
-        plot(times, X(:,1), type_plots_b{n})
-        title('X1 Amount vs Time')
-        xlabel('Time')
-        ylabel('X1 Amount')
-        hold on
+    % first plot displays x1 amount vs time
+    subplot(3,1,1)
+    plot(times, X(:,1), type_plots_b{n})
+    title('X1 Amount vs Time')
+    xlabel('Time')
+    ylabel('X1 Amount')
+    hold on
 
-        % second plot displays x2 amount vs time
-        subplot(3,1,2)
-        plot(times, X(:,2), type_plots_r{n})
-        title('X2 Amount vs Time')
-        xlabel ('Time')
-        ylabel('X2 Amount')
-        hold on
+    % second plot displays x2 amount vs time
+    subplot(3,1,2)
+    plot(times, X(:,2), type_plots_r{n})
+    title('X2 Amount vs Time')
+    xlabel ('Time')
+    ylabel('X2 Amount')
+    hold on
 
-        % third plot displays y amount vs time 
-        subplot(3,1,3)
-        plot(times,X(:,3), type_plots_k{n})
-        title('Y Amount vs Time') 
-        xlabel('Time')
-        ylabel('Y Amount') 
-        hold on 
+    % third plot displays y amount vs time 
+    subplot(3,1,3)
+    plot(times,X(:,3), type_plots_k{n})
+    title('Y Amount vs Time') 
+    xlabel('Time')
+    ylabel('Y Amount') 
+    hold on 
 
-    end
+
 end
 toc
