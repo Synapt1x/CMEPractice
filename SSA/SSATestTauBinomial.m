@@ -16,7 +16,7 @@ prompt = 'How many simulations would you like to run?';
 num_sims = input(prompt);
  
 % user chooses the maximum time for each simulation
-prompt = 'What is the maximum time? (less than 0.07 seconds)';
+prompt = 'What is the maximum time?';
 max_rx = input(prompt);
 [all_rxns] = derivEvals (); % evaluate derivatives for all equations 
 
