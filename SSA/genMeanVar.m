@@ -1,13 +1,10 @@
-function [tauPrime, a_0, aj] = genMeanVar (Rjs, V, X0, eis, gis, all_rxns, tauPrime)
+function [tauPrime] = genMeanVar (Rjs, V, X0, eis, gis, all_rxns, tauPrime, aj, a_0)
 
 numSpecies = 3;
 
 species1 = X0(1); % amount of x1
 species2 = X0(2); % amount of x2
 species3 = X0(3); % amount of y
-
-aj = single(all_rxns(species1,species2,species3));
-a_0 = sum(aj);
 
 % zero out products, so only Vij's for reactants are left
 indsReac = find(V >= 0); % products will have positive v values
@@ -16,7 +13,7 @@ nonCrit(indsReac) = 0; % zero out the Vij's for products
 
 % zero out critical reactions
 indsCrit = find(Rjs); % indexes of reactions which are critical will have a 1
-nonCrit(:, indsCrit) = 0; % zero out all elements for critical reactions
+nonCrit(indsCrit, :) = 0; % zero out all elements for critical reactions
 
 mean = zeros(1, numSpecies); % blank vector to store mean for each species
 var = zeros(1, numSpecies); % blank vector to store variance for each species
