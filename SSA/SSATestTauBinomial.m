@@ -13,7 +13,7 @@ tic
 num_sims = 6;
  
 % user chooses the maximum time for each simulation
-max_rx = 15;
+max_rx = 20;
 
 % evaluate derivatives for all equations. Returns a vector of 3 symbolic
 % equations (one for each reaction). Values will be plugged in to the
@@ -31,11 +31,11 @@ for n = 1:num_sims % loop through all simulations. Plot after each sim
     while count <=max_rx; % loop through tau steps until max time is reached
         
         % identify all critical reactions
-        Rjs = genRj (X0, V, all_rxns); 
+        [Rjs, aj, a_0] = genRj (X0, V, all_rxns); 
     
         % generate one estimate for tau 
         [eis, gis] = genEis (0.05, V, X, num_species, num_rx);
-        [tau_prime, a_0, aj] = genMeanVar (Rjs, V, X0, eis, gis, all_rxns, tau_prime);
+        [tau_prime] = genMeanVar (Rjs, V, X0, eis, gis, all_rxns, tau_prime, aj, a_0);
         
 
         % comparison for the bound of tau
