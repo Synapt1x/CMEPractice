@@ -31,3 +31,4 @@
 | June 5, 2015 | Ella | Revision | SSATestTauBinomial | Master | | Getting stuck in symbolic calculations |
 | June 5, 2015 | Ella | Revision | genRj| Checking whether lj is empty | Getting Stuck|
 | June 5, 2015 | Ella | New File | TauAndJGen | | | 
+| June 8, 2015 | Ella | New File | evalCrit | Evaluates the critical threshold as 10% of the average of the initial quantities of all species|
