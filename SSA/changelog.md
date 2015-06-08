@@ -32,4 +32,4 @@
 | June 5, 2015 | Ella | Revision | genRj| Checking whether lj is empty | Getting Stuck|
 | June 5, 2015 | Ella | New File | TauAndJGen | | | 
 | June 8, 2015 | Ella | New File | evalCrit | Master | Evaluates the critical threshold as 10% of the average of the initial quantities of all species| |
-| June 8, 2015 | Ella | Revision | SSATestTauBinomial, genRj, genMeanVar | Master | Change so that aj is evaluated once and is inputed to the rest of the functions | Checking for longer time periods. Adding additional reactions |
+| June 8, 2015 | Ella | Revision | SSATestTauBinomial, genRj, genMeanVar | Master | Changeed main program so that aj is evaluated once and is inputed to the rest of the functions | Checking for longer time periods. Adding additional reactions |
