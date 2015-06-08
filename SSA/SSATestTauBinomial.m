@@ -13,12 +13,13 @@ tic
 num_sims = 6;
  
 % user chooses the maximum time for each simulation
-max_rx = 20;
+max_rx = 15;
 
 % evaluate derivatives for all equations. Returns a vector of 3 symbolic
 % equations (one for each reaction). Values will be plugged in to the
 % symbolic equations to calculate the aj for each reaction 
 all_rxns = derivEvals (); 
+tau_prime = 0;
 
 for n = 1:num_sims % loop through all simulations. Plot after each sim
     
@@ -34,16 +35,17 @@ for n = 1:num_sims % loop through all simulations. Plot after each sim
     
         % generate one estimate for tau 
         [eis, gis] = genEis (0.05, V, X, num_species, num_rx);
-        [tau_prime, a_0, aj] = genMeanVar (Rjs, V, X0, eis, gis, all_rxns);
+        [tau_prime, a_0, aj] = genMeanVar (Rjs, V, X0, eis, gis, all_rxns, tau_prime);
+        
 
         % comparison for the bound of tau
-        compare = 5 * (1/a_0);
+         compare = 5 * (1/a_0);
         
-        if tau_prime < compare
+        if abs(tau_prime) < compare
             % generate 100 individual SSA steps
             for ssaSteps = 1:5
                 [tau, j] = TauAndJGen (aj);
-                time = time + tau; % find new time by adding tau to previous time
+                time = time + abs(tau); % find new time by adding tau to previous time
                 times = [times time]; % add new time to list of times
     
                 Vj = V(j,:); % retrieve V values for the selected reaction
@@ -54,22 +56,24 @@ for n = 1:num_sims % loop through all simulations. Plot after each sim
     
         else
             % generate tau double prime
-            [tau_double_prime] = genTauDoublePrime(aj, Rjs);   
+            [tau_double_prime] = genTauDoublePrime(aj, Rjs);  
+            
  
             % generate changes to species amounts from reactions during tau
-             if tau_prime < tau_double_prime 
-                tau = tau_prime;
+             if abs(tau_prime) < tau_double_prime 
+                tau = abs(tau_prime);
                 % amount each species changes if tau is selected as tau
                 % prime
                 [X0] = amountChanges(X0, aj, V, num_rx, tau, Rjs);
               
              else
-                tau = tau_double_prime;
+                tau = abs(tau_double_prime);
                 % amount each species changes if tau is tau double prime
                 % (only one critical reaction can occur) 
                 [X0] = amountChangesDouble(X0, aj, V, tau, Rjs);
              end
         
+            
             time = time + tau; % find new time by adding tau to previous time
             times = [times time]; % add new time to list of times
             X = [X; X0]; % store all X values in a matrix
