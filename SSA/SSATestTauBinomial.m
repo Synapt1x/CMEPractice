@@ -13,12 +13,12 @@ tic
 num_sims = 6;
  
 % user chooses the maximum time for each simulation
-max_rx = 20;
+max_rx = 100;
 
 % evaluate derivatives for all equations. Returns a vector of 3 symbolic
 % equations (one for each reaction). Values will be plugged in to the
 % symbolic equations to calculate the aj for each reaction 
-all_rxns = derivEvals (); 
+%all_rxns = derivEvals (); 
 tau_prime = 0;
 
 for n = 1:num_sims % loop through all simulations. Plot after each sim
@@ -27,15 +27,15 @@ for n = 1:num_sims % loop through all simulations. Plot after each sim
 
     % call intialize parameters to define ititial time and concentrations
     [time, times, X0, X, num_rx, V, num_species] = InitializeParameters ();
-
+    nc = evalCrit(X0);
     while count <=max_rx; % loop through tau steps until max time is reached
         
         % identify all critical reactions
-        [Rjs, aj, a_0] = genRj (X0, V, all_rxns); 
+        [Rjs, aj, a_0] = genRj (X0, V,nc); 
     
         % generate one estimate for tau 
         [eis, gis] = genEis (0.05, V, X, num_species, num_rx);
-        [tau_prime] = genMeanVar (Rjs, V, X0, eis, gis, all_rxns, tau_prime, aj, a_0);
+        [tau_prime] = genMeanVar (Rjs, V, X0, eis, gis, tau_prime, aj, a_0);
         
 
         % comparison for the bound of tau
@@ -82,9 +82,9 @@ for n = 1:num_sims % loop through all simulations. Plot after each sim
     end
     
     % plotting symbols for different simulation runs 
-    type_plots_b = {'b-', 'b*', 'bd', 'bp', 'bh', 'b^'};
-    type_plots_r = {'r-', 'r*', 'rd', 'rp', 'rh', 'r^'};
-    type_plots_k = {'k-', 'k*', 'kd', 'kp', 'kh', 'k^'};
+    type_plots_b = {'b-', 'b*-', 'bd-', 'bp-', 'bh-', 'b^-'};
+    type_plots_r = {'r-', 'r*-', 'rd-', 'rp-', 'rh-', 'r^-'};
+    type_plots_k = {'k-', 'k*-', 'kd-', 'kp-', 'kh-', 'k^-'};
  
     figure(1) 
     
@@ -111,7 +111,5 @@ for n = 1:num_sims % loop through all simulations. Plot after each sim
     xlabel('Time')
     ylabel('Y Amount') 
     hold on 
-
-
 end
 toc
