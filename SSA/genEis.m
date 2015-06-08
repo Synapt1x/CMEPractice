@@ -12,7 +12,6 @@ for rx = 1 : numRx
     ordersRx(rx) = orderRx;
 end
 
-
 % find highest order for each species
 orders = zeros(numSpecies, 1);
 ordersInd = {};
