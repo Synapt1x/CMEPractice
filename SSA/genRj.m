@@ -1,4 +1,4 @@
-function [Rjs, aj, a_0] = genRj (X0, V, all_rxns)
+function [Rjs, aj, a_0] = genRj (X0, V, nc)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % generates Ls values for each reaction in order to determine whether the
 % reaction is critical. If there are critical reactions, the function
@@ -8,7 +8,7 @@ function [Rjs, aj, a_0] = genRj (X0, V, all_rxns)
 
 % the minimum value of lj for rj to be considered a critical reaction. This
 % can be a whole number between 2-20. It's usually equal to 10
-nc = 10;  
+  
 
 numRxns = 3;
 
@@ -17,7 +17,9 @@ species2 = X0(2); % amount of x2
 species3 = X0(3); % amount of y
 
 % find ajs for each reaction and store in a vector
-aj = single(all_rxns(species1,species2,species3));
+
+aj = [0.02*species1*species2 0.01*species1*species3 0.5*0.02*species2*(species2-1)];
+%aj = single(all_rxns(species1,species2,species3));
 a_0 = sum(aj); 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % check_elements is used to keep track of which elements in the matrix v
