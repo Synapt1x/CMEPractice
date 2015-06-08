@@ -1,10 +1,6 @@
-function [tauPrime] = genMeanVar (Rjs, V, X0, eis, gis, all_rxns, tauPrime, aj, a_0)
+function [tauPrime] = genMeanVar (Rjs, V, X0, eis, gis, tauPrime, aj, a_0)
 
 numSpecies = 3;
-
-species1 = X0(1); % amount of x1
-species2 = X0(2); % amount of x2
-species3 = X0(3); % amount of y
 
 % zero out products, so only Vij's for reactants are left
 indsReac = find(V >= 0); % products will have positive v values
@@ -47,6 +43,3 @@ ajv = transpose(aj);
     
     bothTerms = [meanTerm varTerm];
     tauPrime = min(bothTerms); % tau prime is minimum of above two terms
-%else
- %   tauPrime = tauPrime;
-%end
