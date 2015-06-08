@@ -1,7 +1,5 @@
 function [eis, gis] = genEis (epsilon, V, X, numSpecies, numRx)
 
-orders = []; % blank vector to store the order of each reaction
-
 gis = zeros(1, numRx); % blank vector to store gi values for each species
 eis = zeros(1, numRx); % blank vector to store epsilon i values for each species
 
@@ -38,20 +36,22 @@ for species = 1:numSpecies % loop through ei values for all species
     orderSpec = orders(species); 
     ViSpec = -V(:, species);
     index = ordersInd{species};
+    testInds = ordersInd{species};
+    testAmounts = max(ViSpec(testInds));
     
     switch orderSpec
         case 1 % maximum order of reaction for species is 1
-        gi = 1;
+            gi = 1;
         case 2 % maximum order of reaction for species is 2
-            if ViSpec(index) > 1 % two parts of species used in 1 rxn
+            if testAmounts > 1 % two parts of species used in 1 rxn
                 gi = 2+(1/(Xi-1));
             else
                 gi = 2;
             end
         case 3 % maximum order of reaction for species is 3
-            if ViSpec(index) >2 % three parts of species used in 1 rxn
+            if testAmounts >2 % three parts of species used in 1 rxn
                 gi = 3+(1/(Xi-1)) + (2/(Xi-2));
-            elseif ViSpec(index) >1 % two parts of species used in 1 rxn
+            elseif testAmounts >1 % two parts of species used in 1 rxn
                 gi = (3/2) * (2+(1/(Xi-1)));
             else
                 gi = 3;
@@ -61,7 +61,3 @@ for species = 1:numSpecies % loop through ei values for all species
 end
 
 eis = epsilon ./ gis; % calculate eis for each species
- 
-    
-
-
