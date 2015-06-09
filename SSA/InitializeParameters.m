@@ -16,6 +16,9 @@ X = X0; % used to store amounts of species at all time pts for one sim
 
 num_rx = 3; % the number of different chemical reactions
 
+
+% The V values represent the reactions, and can be changed. Additional rows represent new reactions being added. 
+% The number of columns represents the number of species, and must be constant across all rows. Species can be added
 V = [-1 -1 1; -1 1 -1; 1 -2 0]; % v values for all reactions
 
 num_species = 3; % the number of species involved in all reactions
