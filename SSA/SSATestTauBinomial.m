@@ -16,7 +16,7 @@ tic
 num_sims = 1;
  
 % user chooses the maximum time for each simulation
-max_rx = 5;
+max_rx = 8;
 
 % evaluate derivatives for all equations. Returns a vector of 3 symbolic
 % equations (one for each reaction). Values will be plugged in to the
@@ -47,14 +47,18 @@ for n = 1:num_sims % loop through all simulations. Plot after each sim
         if abs(tau_prime) < compare
             % generate 100 individual SSA steps
             for ssaSteps = 1:5
-                [tau, j] = TauAndJGen (aj);
-                time = time + abs(tau); % find new time by adding tau to previous time
-                times = [times time]; % add new time to list of times
+                while count <=(max_rx-0.5)
+                    [tau, j] = TauAndJGen (aj);
+                    time = time + abs(tau); % find new time by adding tau to previous time
+                    times = [times time]; % add new time to list of times
     
-                Vj = V(j,:); % retrieve V values for the selected reaction
-                X0 = X0 + Vj; % get new X0 value
-                X = [X; X0]; % store all X values in a matrix
-                count = time;
+                    Vj = V(j,:); % retrieve V values for the selected reaction
+                    X0 = X0 + Vj; % get new X0 value
+                    X = [X; X0]; % store all X values in a matrix
+                    %if time <= max_rx
+                    count = time;
+                    %end
+                end
             end
     
         else
@@ -87,7 +91,7 @@ for n = 1:num_sims % loop through all simulations. Plot after each sim
             
             
         end
-        disp(times)
+
      end
     
     % plotting symbols for different simulation runs 
