@@ -13,10 +13,10 @@ tic
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % user chooses how many simulations to run
-num_sims = 6;
+num_sims = 1;
  
 % user chooses the maximum time for each simulation
-max_rx = 100;
+max_rx = 5;
 
 % evaluate derivatives for all equations. Returns a vector of 3 symbolic
 % equations (one for each reaction). Values will be plugged in to the
@@ -31,8 +31,8 @@ for n = 1:num_sims % loop through all simulations. Plot after each sim
     % call intialize parameters to define ititial time and concentrations
     [time, times, X0, X, num_rx, V, num_species] = InitializeParameters ();
     nc = evalCrit(X0);
-    while count <=max_rx; % loop through tau steps until max time is reached
-        
+     while count <=max_rx; % loop through tau steps until max time is reached
+     
         % identify all critical reactions
         [Rjs, aj, a_0] = genRj (X0, V,nc); 
     
@@ -68,26 +68,32 @@ for n = 1:num_sims % loop through all simulations. Plot after each sim
                 % amount each species changes if tau is selected as tau
                 % prime
                 [X0] = amountChanges(X0, aj, V, num_rx, tau, Rjs);
+                time = time + tau; % find new time by adding tau to previous time
+                times = [times time]; % add new time to list of times
+                X = [X; X0]; % store all X values in a matrix
+                count = time; % increment number of reactions
               
              else
                 tau = abs(tau_double_prime);
                 % amount each species changes if tau is tau double prime
                 % (only one critical reaction can occur) 
                 [X0] = amountChangesDouble(X0, aj, V, tau, Rjs);
+                time = time + tau; % find new time by adding tau to previous time
+                times = [times time]; % add new time to list of times
+                X = [X; X0]; % store all X values in a matrix
+                count = time; % increment number of reactions
              end
         
             
-            time = time + tau; % find new time by adding tau to previous time
-            times = [times time]; % add new time to list of times
-            X = [X; X0]; % store all X values in a matrix
-            count = time; % increment number of reactions
+            
         end
-    end
+        disp(times)
+     end
     
     % plotting symbols for different simulation runs 
-    type_plots_b = {'b-', 'b*-', 'bd-', 'bp-', 'bh-', 'b^-'};
-    type_plots_r = {'r-', 'r*-', 'rd-', 'rp-', 'rh-', 'r^-'};
-    type_plots_k = {'k-', 'k*-', 'kd-', 'kp-', 'kh-', 'k^-'};
+    type_plots_b = {'b>-', 'b*-', 'bd-', 'bp-', 'bh-', 'b^-'};
+    type_plots_r = {'r>-', 'r*-', 'rd-', 'rp-', 'rh-', 'r^-'};
+    type_plots_k = {'k>-', 'k*-', 'kd-', 'kp-', 'kh-', 'k^-'};
  
     figure(1) 
     
