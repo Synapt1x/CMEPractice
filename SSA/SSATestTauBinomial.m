@@ -1,4 +1,7 @@
 function SSATestTauBinomial
+close all
+clear all
+clc
 tic
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Programmed by: Ella Thomson
