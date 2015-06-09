@@ -18,7 +18,7 @@ for num=1:numCrit
 end
 
 ranTest = rand;
-if numCrit > 0
+if numCrit >0
     if ranTest < probs(1) 
         j = 1; % critical reaction 1 will occur
     elseif ranTest < probs(2)
@@ -26,12 +26,12 @@ if numCrit > 0
     else
         j = 3; % critical reaction 3 will occur
     end
-    
+if X0(j) ~=0
     % change to concentrations from critical reaction
-     changeCrit = V(j,:); % retrieve changes caused by critical reaction
-     X0 = X0 + changeCrit; % add changes to previous amounts of species
+    changeCrit = V(j,:); % retrieve changes caused by critical reaction
+    X0 = X0 + changeCrit; % add changes to previous amounts of species
 end
- 
+end
  % changes to concentrations for non-critical reactions
  indsNon = find(not(Rjs)); % indexes of non-critical reactions
  numNon = length(indsNon); % find number of non-critical reactions
@@ -44,5 +44,3 @@ end
     totalChange = changeNonCrit.* numTimes; % the change in each species
     X0 = X0 + totalChange; % new amounts of each species 
  end
- 
-    
