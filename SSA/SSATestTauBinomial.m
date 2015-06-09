@@ -13,10 +13,10 @@ tic
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % user chooses how many simulations to run
-num_sims = 1;
+num_sims = 3;
  
 % user chooses the maximum time for each simulation
-max_rx = 8;
+max_rx = 100;
 
 % evaluate derivatives for all equations. Returns a vector of 3 symbolic
 % equations (one for each reaction). Values will be plugged in to the
@@ -86,12 +86,8 @@ for n = 1:num_sims % loop through all simulations. Plot after each sim
                 times = [times time]; % add new time to list of times
                 X = [X; X0]; % store all X values in a matrix
                 count = time; % increment number of reactions
-             end
-        
-            
-            
+             end 
         end
-
      end
     
     % plotting symbols for different simulation runs 
