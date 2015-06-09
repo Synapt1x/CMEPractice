@@ -33,3 +33,4 @@
 | June 5, 2015 | Ella | New File | TauAndJGen | | | 
 | June 8, 2015 | Ella | New File | evalCrit | Master | Evaluates the critical threshold as 10% of the average of the initial quantities of all species| |
 | June 8, 2015 | Ella | Revision | SSATestTauBinomial, genRj, genMeanVar | Master | Changed main program so that aj is evaluated once and is inputed to the rest of the functions | Checking for longer time periods. Adding additional reactions |
+| June 9, 2015 | Ella | New File | SSATestTauAverages | Master | Calculates and plots average values for x1, X2 and y over the whole time period | Testing for longer time periods. Adding additional reactions |
