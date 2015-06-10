@@ -1,6 +1,6 @@
-function [tauPrime] = genMeanVar (Rjs, V, X0, eis, gis, tauPrime, aj, a_0)
+function [tauPrime] = genMeanVar (Rjs, V, X0, eis, gis, tauPrime, aj, a_0, numSpecies)
 
-numSpecies = 3;
+%numSpecies = 3;
 
 % zero out products, so only Vij's for reactants are left
 indsReac = find(V >= 0); % products will have positive v values
