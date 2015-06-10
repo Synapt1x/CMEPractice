@@ -15,12 +15,17 @@ end
 % find highest order for each species
 orders = zeros(numSpecies, 1);
 ordersInd = {};
+
 for sp = 1:numSpecies
     allInds = zeros(1, numRx);
     testCol = V(:, sp);
     indsCheck = find(testCol <0);
     allInds(indsCheck) = 1;
-    maxOrd = max(ordersRx(indsCheck));
+    if length(indsCheck) ==0
+        maxOrd = 0;
+    else
+        maxOrd = max(ordersRx(indsCheck));
+    end
     orders(sp,1) = maxOrd;
     orderCheck = ordersRx .* allInds;
     ordersCheck = find(orderCheck == maxOrd);
