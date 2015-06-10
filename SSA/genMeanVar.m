@@ -38,7 +38,7 @@ ajv = transpose(aj);
     varNum = max (egs);
     indsVar = find(egs == varNum);
     indVar = indsVar(1);
-    varTerm = varNum ./ (var(indVar)); % the maximum of the variance terms
+    varTerm = varNum ./ abs((var(indVar))); % the maximum of the variance terms
     
     
     bothTerms = [meanTerm varTerm];
