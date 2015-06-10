@@ -1,7 +1,4 @@
 function SSATestTauAverages
-%close all
-%clear all
-%clc
 tic
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -100,7 +97,7 @@ for n = 1:num_sims % loop through all simulations. Plot after each sim
                 count = time; % increment number of reactions
             end
         end
-    disp(times)    
+       
     end
     XX = transpose(X);
     all_values_sim = [times; XX];
