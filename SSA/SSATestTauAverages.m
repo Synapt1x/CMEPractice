@@ -1,6 +1,5 @@
 function SSATestTauAverages
 tic
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Programmed by: Ella Thomson
 % Tracks the changes in amounts of three chemical reactants involved in
@@ -11,7 +10,7 @@ tic
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % user chooses how many simulations to run
-num_sims = 5;
+num_sims = 3;
 
 % user chooses the maximum time for each simulation
 max_rx = 100;
@@ -34,7 +33,7 @@ for n = 1:num_sims % loop through all simulations. Plot after each sim
     while count <=max_rx; % loop through tau steps until max time is reached
         
         % identify all critical reactions
-        [Rjs, aj, a_0] = genRj (X0, V,nc);
+        [Rjs, aj, a_0] = genRj (X0, V,nc, num_rx);
         
         % generate one estimate for tau
         [eis, gis] = genEis (0.05, V, X, num_species, num_rx);
@@ -106,12 +105,13 @@ for n = 1:num_sims % loop through all simulations. Plot after each sim
     % plotting symbols for different simulation runs
     type_plots_b = {'b>-', 'b*-', 'bd-', 'bp-', 'bh-', 'b^-'};
     type_plots_r = {'r>-', 'r*-', 'rd-', 'rp-', 'rh-', 'r^-'};
-    type_plots_k = {'g>-', 'g*-', 'gd-', 'gp-', 'gh-', 'g^-'};
+    type_plots_g = {'g>-', 'g*-', 'gd-', 'gp-', 'gh-', 'g^-'};
+    type_plots_k = {'k>-', 'k*-', 'kd-', 'kp-', 'kh-', 'k^-'};
     
     figure(1)
     
     % first plot displays x1 amount vs time
-    subplot(3,1,1)
+    subplot(4,1,1)
     plot(times, X(:,1), type_plots_b{n})
     title('X1 Amount vs Time')
     xlabel('Time')
@@ -120,7 +120,7 @@ for n = 1:num_sims % loop through all simulations. Plot after each sim
     hold on
     
     % second plot displays x2 amount vs time
-    subplot(3,1,2)
+    subplot(4,1,2)
     plot(times, X(:,2), type_plots_r{n})
     title('X2 Amount vs Time')
     xlabel ('Time')
@@ -129,11 +129,19 @@ for n = 1:num_sims % loop through all simulations. Plot after each sim
     hold on
     
     % third plot displays y amount vs time
-    subplot(3,1,3)
-    plot(times,X(:,3), type_plots_k{n})
+    subplot(4,1,3)
+    plot(times,X(:,3), type_plots_g{n})
     title('Y Amount vs Time')
     xlabel('Time')
     ylabel('Y Amount')
+    axis ([0 inf 0 inf])
+    hold on
+    
+    subplot(4,1,4)
+    plot(times,X(:,4), type_plots_k{n})
+    title('Z Amount vs Time')
+    xlabel('Time')
+    ylabel('Z Amount')
     axis ([0 inf 0 inf])
     hold on
 end
@@ -149,7 +157,7 @@ y_average = B(4,:);
 figure(2)
 
 % first plot displays x1 amount vs time
-subplot(3,1,1)
+subplot(4,1,1)
 plot(times_average, x1_average, 'b')
 title('Average X1 Amount vs Time')
 xlabel('Time')
@@ -158,7 +166,7 @@ axis([0 inf 0 inf])
 hold on
 
 % second plot displays x2 amount vs time
-subplot(3,1,2)
+subplot(4,1,2)
 plot(times_average, x2_average, 'r')
 title('Average X2 Amount vs Time')
 xlabel ('Time')
@@ -167,11 +175,20 @@ axis([0 inf 0 inf])
 hold on
 
 % third plot displays y amount vs time
-subplot(3,1,3)
+subplot(4,1,3)
 plot(times_average ,y_average, 'g')
 title('Y Amount vs Time')
 xlabel('Time')
 ylabel('Y Amount')
+axis ([0 inf 0 inf])
+hold on
+
+% third plot displays y amount vs time
+subplot(4,1,4)
+plot(times_average ,y_average, 'k')
+title('Z Amount vs Time')
+xlabel('Time')
+ylabel('Z Amount')
 axis ([0 inf 0 inf])
 hold on
 
