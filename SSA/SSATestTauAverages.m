@@ -111,7 +111,7 @@ for n = 1:num_sims % loop through all simulations. Plot after each sim
     figure(1)
     
     % first plot displays x1 amount vs time
-    subplot(4,1,1)
+    subplot(2,2,1)
     plot(times, X(:,1), type_plots_b{n})
     title('X1 Amount vs Time')
     xlabel('Time')
@@ -120,7 +120,7 @@ for n = 1:num_sims % loop through all simulations. Plot after each sim
     hold on
     
     % second plot displays x2 amount vs time
-    subplot(4,1,2)
+    subplot(2,2,2)
     plot(times, X(:,2), type_plots_r{n})
     title('X2 Amount vs Time')
     xlabel ('Time')
@@ -129,7 +129,7 @@ for n = 1:num_sims % loop through all simulations. Plot after each sim
     hold on
     
     % third plot displays y amount vs time
-    subplot(4,1,3)
+    subplot(2,2,3)
     plot(times,X(:,3), type_plots_g{n})
     title('Y Amount vs Time')
     xlabel('Time')
@@ -137,7 +137,7 @@ for n = 1:num_sims % loop through all simulations. Plot after each sim
     axis ([0 inf 0 inf])
     hold on
     
-    subplot(4,1,4)
+    subplot(2,2,4)
     plot(times,X(:,4), type_plots_k{n})
     title('Z Amount vs Time')
     xlabel('Time')
@@ -157,7 +157,7 @@ z_average = B(5,:);
 figure(2)
 
 % first plot displays x1 amount vs time
-subplot(4,1,1)
+subplot(2,2,1)
 plot(times_average, x1_average, 'b')
 title('Average X1 Amount vs Time')
 xlabel('Time')
@@ -166,7 +166,7 @@ axis([0 inf 0 inf])
 hold on
 
 % second plot displays x2 amount vs time
-subplot(4,1,2)
+subplot(2,2,2)
 plot(times_average, x2_average, 'r')
 title('Average X2 Amount vs Time')
 xlabel ('Time')
@@ -175,7 +175,7 @@ axis([0 inf 0 inf])
 hold on
 
 % third plot displays y amount vs time
-subplot(4,1,3)
+subplot(2,2,3)
 plot(times_average ,y_average, 'g')
 title('Y Amount vs Time')
 xlabel('Time')
@@ -184,7 +184,7 @@ axis ([0 inf 0 inf])
 hold on
 
 % third plot displays y amount vs time
-subplot(4,1,4)
+subplot(2,2,4)
 plot(times_average ,z_average, 'k')
 title('Z Amount vs Time')
 xlabel('Time')
