@@ -37,3 +37,4 @@
 | June 10, 2015 | Ella | Revision | SSATestTauAverages, genMeanVar | Master | Added corrective check to ensure infinity is not generated for tau prime | |
 | June 10, 2015 | Ella | Revision | SSATestTauAverages | Master | Added corrective check to ensure species concentrations do not drop below 0 | Fixing plots for average species amounts |
 | June 10, 2015 | Ella | Revision | SSATestTauAverages, all functions other than initializeParameters | Master | numSpecies and numReactions are defined in the initializeParameters function and are called as an input to all other functions when necessary | Expanding to more than 3 reactions. The described changes will facilitate this. However, the aj's for additional reactions will still need to be added individually in genRj |
+| June 10, 2015 | Ella | Revision | genEis | Master | Separated the values for numSpecies and numRx | Test with a higher number of species and reactions |
