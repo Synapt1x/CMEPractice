@@ -152,7 +152,7 @@ times_average = B(1,:);
 x1_average = B(2,:);
 x2_average = B(3,:);
 y_average = B(4,:);
-
+z_average = B(5,:);
 
 figure(2)
 
@@ -185,7 +185,7 @@ hold on
 
 % third plot displays y amount vs time
 subplot(4,1,4)
-plot(times_average ,y_average, 'k')
+plot(times_average ,z_average, 'k')
 title('Z Amount vs Time')
 xlabel('Time')
 ylabel('Z Amount')
