@@ -1,7 +1,7 @@
 function [eis, gis] = genEis (epsilon, V, X, numSpecies, numRx)
 
-gis = zeros(1, numRx); % blank vector to store gi values for each species
-eis = zeros(1, numRx); % blank vector to store epsilon i values for each species
+gis = zeros(1, numSpecies); % blank vector to store gi values for each species
+eis = zeros(1, numSpecies); % blank vector to store epsilon i values for each species
 
 % find orders of all reactions
 ordersRx = zeros(1, numRx);
@@ -16,7 +16,7 @@ end
 orders = zeros(numSpecies, 1);
 ordersInd = {};
 for sp = 1:numSpecies
-    allInds = zeros(1, numSpecies);
+    allInds = zeros(1, numRx);
     testCol = V(:, sp);
     indsCheck = find(testCol <0);
     allInds(indsCheck) = 1;
@@ -34,7 +34,7 @@ for species = 1:numSpecies % loop through ei values for all species
     Xi = currentX(species); % current amount of one species
     orderSpec = orders(species); 
     ViSpec = -V(:, species);
-    index = ordersInd{species};
+    %index = ordersInd{species};
     testInds = ordersInd{species};
     testAmounts = max(ViSpec(testInds));
     
