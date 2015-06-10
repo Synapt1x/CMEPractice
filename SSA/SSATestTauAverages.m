@@ -11,7 +11,7 @@ tic
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % user chooses how many simulations to run
-num_sims = 3;
+num_sims = 5;
 
 % user chooses the maximum time for each simulation
 max_rx = 100;
@@ -38,7 +38,7 @@ for n = 1:num_sims % loop through all simulations. Plot after each sim
         
         % generate one estimate for tau
         [eis, gis] = genEis (0.05, V, X, num_species, num_rx);
-        [tau_prime] = genMeanVar (Rjs, V, X0, eis, gis, tau_prime, aj, a_0);
+        [tau_prime] = genMeanVar (Rjs, V, X0, eis, gis, tau_prime, aj, a_0, num_species);
         
         % comparison for the bound of tau
         compare = abs(5 * (1/a_0));
@@ -85,7 +85,7 @@ for n = 1:num_sims % loop through all simulations. Plot after each sim
                 tau = abs(tau_double_prime);
                 % amount each species changes if tau is tau double prime
                 % (only one critical reaction can occur)
-                [X0] = amountChangesDouble(X0, aj, V, tau, Rjs);
+                [X0] = amountChangesDouble(X0, aj, V, tau, Rjs, num_rx);
                 time = time + tau; % find new time by adding tau to previous time
                 if time > max_rx
                     time = max_rx+0.1;
@@ -97,7 +97,7 @@ for n = 1:num_sims % loop through all simulations. Plot after each sim
                 count = time; % increment number of reactions
             end
         end
-       
+    %disp(times)    
     end
     XX = transpose(X);
     all_values_sim = [times; XX];
@@ -106,7 +106,7 @@ for n = 1:num_sims % loop through all simulations. Plot after each sim
     % plotting symbols for different simulation runs
     type_plots_b = {'b>-', 'b*-', 'bd-', 'bp-', 'bh-', 'b^-'};
     type_plots_r = {'r>-', 'r*-', 'rd-', 'rp-', 'rh-', 'r^-'};
-    type_plots_k = {'k>-', 'k*-', 'kd-', 'kp-', 'kh-', 'k^-'};
+    type_plots_k = {'g>-', 'g*-', 'gd-', 'gp-', 'gh-', 'g^-'};
     
     figure(1)
     
@@ -168,7 +168,7 @@ hold on
 
 % third plot displays y amount vs time
 subplot(3,1,3)
-plot(times_average ,y_average, 'k')
+plot(times_average ,y_average, 'g')
 title('Y Amount vs Time')
 xlabel('Time')
 ylabel('Y Amount')
