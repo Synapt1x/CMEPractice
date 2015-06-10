@@ -17,7 +17,7 @@ tic
 num_sims = 3;
 
 % user chooses the maximum time for each simulation
-max_rx = 40;
+max_rx = 100;
 
 % evaluate derivatives for all equations. Returns a vector of 3 symbolic
 % equations (one for each reaction). Values will be plugged in to the
@@ -56,6 +56,8 @@ for n = 1:num_sims % loop through all simulations. Plot after each sim
                     
                     Vj = V(j,:); % retrieve V values for the selected reaction
                     X0 = X0 + Vj; % get new X0 value
+                    b = find(X0<0);
+                    X0(b) = 0;
                     X = [X; X0]; % store all X values in a matrix
                     %if time <= max_rx
                     count = time;
@@ -92,6 +94,8 @@ for n = 1:num_sims % loop through all simulations. Plot after each sim
                     time = max_rx+0.1;
                 end
                 times = [times time]; % add new time to list of times
+                b = find(X0<0);
+                X0(b) = 0;
                 X = [X; X0]; % store all X values in a matrix
                 count = time; % increment number of reactions
             end
