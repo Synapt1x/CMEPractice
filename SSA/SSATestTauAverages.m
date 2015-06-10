@@ -1,8 +1,9 @@
 function SSATestTauAverages
-close all
-clear all
-clc
+%close all
+%clear all
+%clc
 tic
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Programmed by: Ella Thomson
 % Tracks the changes in amounts of three chemical reactants involved in
@@ -16,7 +17,7 @@ tic
 num_sims = 3;
 
 % user chooses the maximum time for each simulation
-max_rx = 50;
+max_rx = 40;
 
 % evaluate derivatives for all equations. Returns a vector of 3 symbolic
 % equations (one for each reaction). Values will be plugged in to the
@@ -43,7 +44,7 @@ for n = 1:num_sims % loop through all simulations. Plot after each sim
         [tau_prime] = genMeanVar (Rjs, V, X0, eis, gis, tau_prime, aj, a_0);
         
         % comparison for the bound of tau
-        compare = 5 * (1/a_0);
+        compare = abs(5 * (1/a_0));
         
         if abs(tau_prime) < compare
             % generate 100 individual SSA steps
@@ -74,6 +75,9 @@ for n = 1:num_sims % loop through all simulations. Plot after each sim
                 % prime
                 [X0] = amountChanges(X0, aj, V, num_rx, tau, Rjs);
                 time = time + tau; % find new time by adding tau to previous time
+                if time > max_rx
+                    time = max_rx +0.1;
+                end
                 times = [times time]; % add new time to list of times
                 X = [X; X0]; % store all X values in a matrix
                 count = time; % increment number of reactions
@@ -84,11 +88,15 @@ for n = 1:num_sims % loop through all simulations. Plot after each sim
                 % (only one critical reaction can occur)
                 [X0] = amountChangesDouble(X0, aj, V, tau, Rjs);
                 time = time + tau; % find new time by adding tau to previous time
+                if time > max_rx
+                    time = max_rx+0.1;
+                end
                 times = [times time]; % add new time to list of times
                 X = [X; X0]; % store all X values in a matrix
                 count = time; % increment number of reactions
             end
         end
+    disp(times)    
     end
     XX = transpose(X);
     all_values_sim = [times; XX];
