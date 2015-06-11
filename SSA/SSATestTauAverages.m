@@ -146,9 +146,6 @@ for int = interval:interval:max_rx
     mean_z(count) = mean(z_average(between));
 end
 
-disp(x1_average)
-disp(mean_x1)
-
 
 figure(2)
 
