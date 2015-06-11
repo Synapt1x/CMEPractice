@@ -10,7 +10,7 @@ tic
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % user chooses how many simulations to run
-num_sims = 10;
+num_sims = 100;
 
 % user chooses the maximum time for each simulation
 max_rx = 100;
@@ -133,6 +133,10 @@ mean_z = zeros(1, num_pts);
 mean_z(1) = z_average(1); 
 ints = [0];
 count = 1;
+variances_x1 = zeros(1, num_pts);
+variances_x2 = zeros(1, num_pts);
+variances_y = zeros(1, num_pts);
+variances_z = zeros(1, num_pts);
 for int = interval:interval:max_rx
     count = count+1;
     ints = [ints int];
@@ -140,12 +144,30 @@ for int = interval:interval:max_rx
     more = times_average <= (ints(count));
     bet = less.*more;
     between = find(bet);
-    mean_x1(count) = mean(x1_average(between));
-    mean_x2(count) = mean(x2_average(between));
-    mean_y(count) = mean(y_average(between));
-    mean_z(count) = mean(z_average(between));
+    allx1s = x1_average(between);
+    allx2s = x2_average(between);
+    allys = y_average(between);
+    allzs = z_average(between);
+    num_between = length(allx1s);
+    % calculations for means
+    mean_x1(count) = mean(allx1s);
+    mean_x2(count) = mean(allx2s);
+    mean_y(count) = mean(allys);
+    mean_z(count) = mean(allzs);
+    
+    % calculations for variances
+    varsX1 = ((allx1s-mean_x1(count)).^2)./num_between;
+    variances_x1(count) = mean(varsX1);
+    
+    varsX2 = ((allx2s-mean_x2(count)).^2)./num_between;
+    variances_x2(count) = mean(varsX2);
+    
+    varsY = ((allys-mean_y(count)).^2)./num_between;
+    variances_y(count) = mean(varsY);
+    
+    varsZ = ((allzs-mean_z(count)).^2)./num_between;
+    variances_z(count) = mean(varsZ);
 end
-
 
 figure(2)
 
@@ -193,5 +215,17 @@ ylabel('Z Amount')
 axis ([0 inf 0 inf])
 hold on
 
+
+disp('Variance X1')
+disp(mean(variances_x1))
+
+disp('Variance X2')
+disp(mean(variances_x2))
+
+disp('Variance Y')
+disp(mean(variances_y))
+
+disp('Variance Z')
+disp(mean(variances_z))
 
 toc
