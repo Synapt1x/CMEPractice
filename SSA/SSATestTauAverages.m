@@ -1,4 +1,4 @@
-function SSATestTauAverages
+function SSATestMultiSims
 tic
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Programmed by: Ella Thomson
@@ -10,10 +10,14 @@ tic
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % user chooses how many simulations to run
-num_sims = 3;
+num_sims = 10;
 
 % user chooses the maximum time for each simulation
 max_rx = 100;
+
+% interval used for plotting means and calculating variance
+interval = 0.05 * max_rx;
+
 
 % evaluate derivatives for all equations. Returns a vector of 3 symbolic
 % equations (one for each reaction). Values will be plugged in to the
@@ -95,55 +99,15 @@ for n = 1:num_sims % loop through all simulations. Plot after each sim
                 X = [X; X0]; % store all X values in a matrix
                 count = time; % increment number of reactions
             end
-        end
-    %disp(times)    
+        end   
     end
     XX = transpose(X);
     all_values_sim = [times; XX];
     all_values = [all_values all_values_sim];
     all_value_sim = [];
-    % plotting symbols for different simulation runs
-    type_plots_b = {'b>-', 'b*-', 'bd-', 'bp-', 'bh-', 'b^-'};
-    type_plots_r = {'r>-', 'r*-', 'rd-', 'rp-', 'rh-', 'r^-'};
-    type_plots_g = {'g>-', 'g*-', 'gd-', 'gp-', 'gh-', 'g^-'};
-    type_plots_k = {'k>-', 'k*-', 'kd-', 'kp-', 'kh-', 'k^-'};
+    disp('Current Simulation Number')
+    disp(n)
     
-    figure(1)
-    
-    % first plot displays x1 amount vs time
-    subplot(2,2,1)
-    plot(times, X(:,1), type_plots_b{n})
-    title('X1 Amount vs Time')
-    xlabel('Time')
-    ylabel('X1 Amount')
-    axis([0 inf 0 inf])
-    hold on
-    
-    % second plot displays x2 amount vs time
-    subplot(2,2,2)
-    plot(times, X(:,2), type_plots_r{n})
-    title('X2 Amount vs Time')
-    xlabel ('Time')
-    ylabel('X2 Amount')
-    axis([0 inf 0 inf])
-    hold on
-    
-    % third plot displays y amount vs time
-    subplot(2,2,3)
-    plot(times,X(:,3), type_plots_g{n})
-    title('Y Amount vs Time')
-    xlabel('Time')
-    ylabel('Y Amount')
-    axis ([0 inf 0 inf])
-    hold on
-    
-    subplot(2,2,4)
-    plot(times,X(:,4), type_plots_k{n})
-    title('Z Amount vs Time')
-    xlabel('Time')
-    ylabel('Z Amount')
-    axis ([0 inf 0 inf])
-    hold on
 end
 [~,I]=sort(all_values(1,:));
 B=all_values(:,I);
@@ -154,11 +118,45 @@ x2_average = B(3,:);
 y_average = B(4,:);
 z_average = B(5,:);
 
+
+% calculations and plotting for moving average (mean)
+
+mean_times = 0:interval:max_rx;
+num_pts = length(mean_times);
+mean_x1 = zeros(1, num_pts);
+mean_x1(1) = x1_average(1);
+mean_x2 = zeros(1, num_pts);
+mean_x2(1) = x2_average(1);
+mean_y = zeros(1, num_pts);
+mean_y(1) = y_average(1);
+mean_z = zeros(1, num_pts); 
+mean_z(1) = z_average(1); 
+ints = [0];
+count = 1;
+for int = interval:interval:max_rx
+    count = count+1;
+    ints = [ints int];
+    less = times_average > (ints(count-1));
+    more = times_average <= (ints(count));
+    bet = less.*more;
+    between = find(bet);
+    mean_x1(count) = mean(x1_average(between));
+    mean_x2(count) = mean(x2_average(between));
+    mean_y(count) = mean(y_average(between));
+    mean_z(count) = mean(z_average(between));
+end
+
+disp(x1_average)
+disp(mean_x1)
+
+
 figure(2)
 
 % first plot displays x1 amount vs time
 subplot(2,2,1)
 plot(times_average, x1_average, 'b')
+hold on
+plot(mean_times,mean_x1, 'k', 'LineWidth', 3)
 title('Average X1 Amount vs Time')
 xlabel('Time')
 ylabel('X1 Amount')
@@ -168,6 +166,8 @@ hold on
 % second plot displays x2 amount vs time
 subplot(2,2,2)
 plot(times_average, x2_average, 'r')
+hold on
+plot(mean_times, mean_x2, 'k', 'LineWidth', 3)
 title('Average X2 Amount vs Time')
 xlabel ('Time')
 ylabel('X2 Amount')
@@ -177,6 +177,8 @@ hold on
 % third plot displays y amount vs time
 subplot(2,2,3)
 plot(times_average ,y_average, 'g')
+hold on
+plot(mean_times, mean_y, 'k', 'LineWidth', 3)
 title('Y Amount vs Time')
 xlabel('Time')
 ylabel('Y Amount')
@@ -185,11 +187,14 @@ hold on
 
 % third plot displays y amount vs time
 subplot(2,2,4)
-plot(times_average ,z_average, 'k')
+plot(times_average ,z_average, 'c')
+hold on
+plot(mean_times, mean_z, 'k', 'LineWidth', 3)
 title('Z Amount vs Time')
 xlabel('Time')
 ylabel('Z Amount')
 axis ([0 inf 0 inf])
 hold on
+
 
 toc
