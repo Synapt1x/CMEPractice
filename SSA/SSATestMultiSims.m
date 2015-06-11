@@ -10,13 +10,13 @@ tic
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % user chooses how many simulations to run
-num_sims = 100;
+num_sims = 10;
 
 % user chooses the maximum time for each simulation
 max_rx = 100;
 
 % interval used for plotting means and calculating variance
-interval = 0.05 * max_rx;
+interval = 0.01 * max_rx;
 
 % evaluate derivatives for all equations. Returns a vector of 3 symbolic
 % equations (one for each reaction). Values will be plugged in to the
@@ -207,6 +207,86 @@ for int = interval:interval:max_rx % generates mean and variance for each interv
     variances_z(count) = sum(varsZ);
 end
 
+% calculations and plotting for moving average (mean) with number of points
+
+
+total_num = length(times_average);
+int_num = round(0.01 * total_num);
+
+% vector to store time for each interval 
+mean_points = 1:int_num:total_num;
+times_plot_num = times_average(mean_points);
+% number of intervals to be used for mean calculation
+num_pts_size = length(mean_points);
+
+% blank vector to store x1 amounts at each interval
+mean_x1_num = zeros(1, num_pts_size);
+mean_x1_num(1) = x1_average(1);
+
+% blank vector to store x2 amounts at each interval
+mean_x2_num = zeros(1, num_pts_size);
+mean_x2_num(1) = x2_average(1);
+
+% blank vector to sore y amounts at each interval
+mean_y_num = zeros(1, num_pts_size);
+mean_y_num(1) = y_average(1);
+
+% blank vector to store z amounts at each interval
+mean_z_num = zeros(1, num_pts_size); 
+mean_z_num(1) = z_average(1); 
+
+% vector to store the current count of the for loop below 
+ints_num = [1];
+count_num = 1;
+
+% vector to store interval variances for x1
+variances_x1_num = zeros(1, num_pts_size);
+
+% vector to store interval variances for x2
+variances_x2_num = zeros(1, num_pts_size);
+
+% vector to store inerval variances for y
+variances_y_num = zeros(1, num_pts_size);
+
+% vector to store interval variances for z
+variances_z_num = zeros(1, num_pts_size);
+
+for ints = int_num:int_num:total_num % generates mean and variance for each interval
+    count_num = count_num+1;
+    ints_num = [ints_num ints];
+    
+    allx1s_num = x1_average(ints_num(count_num-1): ints_num(count_num)); % all x1 amounts in the range
+    allx2s_num = x2_average(ints_num(count_num-1): ints_num(count_num)); % all x2 amounts in the range
+    allys_num = y_average(ints_num(count_num-1): ints_num(count_num)); % all y amounts in the range
+    allzs_num = z_average(ints_num(count_num-1): ints_num(count_num)); % all z amounts in the range
+    
+    amt_between = length(allx1s_num); % the number of times in the range
+    
+    % calculations for means
+    mean_x1_num(count_num) = mean(allx1s_num); % average of x1 amounts in the range
+    mean_x2_num(count_num) = mean(allx2s_num); % average of x2 amounts in the range
+    mean_y_num(count_num) = mean(allys_num); % average of y amounts in the range
+    mean_z_num(count_num) = mean(allzs_num); % average of z amounts in the range
+    
+    % calculations for variances
+    % the overall variance in each interval is the sum of all variances in
+    % that interval. The variances for x1, x2, y and z are calculated
+    % separately
+    varsX1_num = ((allx1s_num-mean_x1_num(count_num)).^2)./amt_between;
+    variances_x1_num(count_num) = sum(varsX1_num); 
+    
+    varsX2_num = ((allx2s_num-mean_x2_num(count_num)).^2)./amt_between;
+    variances_x2_num(count_num) = sum(varsX2_num);
+    
+    varsY_num = ((allys_num-mean_y_num(count_num)).^2)./amt_between;
+    variances_y_num(count_num) = sum(varsY_num);
+    
+    varsZ_num = ((allzs_num-mean_z_num(count_num)).^2)./amt_between;
+    variances_z_num(count_num) = sum(varsZ_num);
+end
+
+
+
 figure(2)
 
 % first plot displays average x1 amount vs time
@@ -214,6 +294,7 @@ subplot(2,2,1)
 plot(times_average, x1_average, 'b') % plots all points from all simulations
 hold on
 plot(mean_times,mean_x1, 'k', 'LineWidth', 3) % plots mean point in each time interval
+hold on
 title('Average X1 Amount vs Time (Time Intervals)')
 xlabel('Time')
 ylabel('X1 Amount')
@@ -265,5 +346,67 @@ disp(mean(variances_y)) % variance y is mean of variances from each interval
 
 disp('Variance Z') % prints overall variane for z
 disp(mean(variances_z)) % variance z is mean of variances from each interval
+
+
+figure(3)
+
+% first plot displays average x1 amount vs time
+subplot(2,2,1)
+plot(times_average, x1_average, 'b') % plots all points from all simulations
+hold on
+plot(times_plot_num,mean_x1_num, 'k', 'LineWidth', 3) % plots mean point in each time interval
+hold on
+title('Average X1 Amount vs Time (Step Intervals)')
+xlabel('Time')
+ylabel('X1 Amount')
+axis([0 inf 0 inf])
+hold on
+
+% second plot displays x2 amount vs time
+subplot(2,2,2)
+plot(times_average, x2_average, 'r') % plots all points from all simulations
+hold on
+plot(times_plot_num, mean_x2_num, 'k', 'LineWidth', 3) % plots mean point in each interval
+title('Average X2 Amount vs Time (Step Intervals)') 
+xlabel ('Time')
+ylabel('X2 Amount')
+axis([0 inf 0 inf])
+hold on
+
+% third plot displays y amount vs time
+subplot(2,2,3)
+plot(times_average ,y_average, 'g') % plots all points from all simulations
+hold on
+plot(times_plot_num, mean_y_num, 'k', 'LineWidth', 3) % plots average point in each interval
+title('Average Y Amount vs Time (Step Intervals)')
+xlabel('Time')
+ylabel('Y Amount')
+axis ([0 inf 0 inf])
+hold on
+
+% fourth plot displays y amount vs time
+subplot(2,2,4)
+plot(times_average ,z_average, 'c') % plots all points from all simulations
+hold on
+plot(times_plot_num, mean_z_num, 'k', 'LineWidth', 3) % plots average point in each interval
+title('Average Z Amount vs Time (Step Intervals)')
+xlabel('Time')
+ylabel('Z Amount')
+axis ([0 inf 0 inf])
+hold on
+
+
+disp('Variance X1') % prints overall variance for x1
+disp(mean(variances_x1_num)) % variance x1 is mean of variances from each interval
+
+disp('Variance X2') % prints overall vaiance for x2
+disp(mean(variances_x2_num)) % variance x2 is mean of variances from each interval
+
+disp('Variance Y') % prints overall variance for y
+disp(mean(variances_y_num)) % variance y is mean of variances from each interval
+
+disp('Variance Z') % prints overall variane for z
+disp(mean(variances_z_num)) % variance z is mean of variances from each interval
+
 
 toc
