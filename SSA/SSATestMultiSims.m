@@ -10,7 +10,7 @@ tic
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % user chooses how many simulations to run
-num_sims = 10;
+num_sims = 100;
 
 % user chooses the maximum time for each simulation
 max_rx = 100;
@@ -130,8 +130,9 @@ x2_average = B(3,:); % extract row with all X2 amounts
 y_average = B(4,:); % extract row with all y amounts
 z_average = B(5,:); % extract row with all x amounts
 
-
-% calculations and plotting for moving average (mean)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% calculations and plotting for mean and variance (time)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % vector to store time for each interval 
 mean_times = 0:interval:max_rx;
@@ -158,16 +159,16 @@ mean_z(1) = z_average(1);
 ints = [0];
 count = 1;
 
-% vector to store interval variances for x1
+% vector to store interval variances for x1 for time intervals
 variances_x1 = zeros(1, num_pts);
 
-% vector to store interval variances for x2
+% vector to store interval variances for x2 for time intervals
 variances_x2 = zeros(1, num_pts);
 
-% vector to store inerval variances for y
+% vector to store inerval variances for y for time intervals
 variances_y = zeros(1, num_pts);
 
-% vector to store interval variances for z
+% vector to store interval variances for z for time intervals
 variances_z = zeros(1, num_pts);
 
 for int = interval:interval:max_rx % generates mean and variance for each interval
@@ -207,31 +208,37 @@ for int = interval:interval:max_rx % generates mean and variance for each interv
     variances_z(count) = sum(varsZ);
 end
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % calculations and plotting for moving average (mean) with number of points
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-total_num = length(times_average);
-int_num = round(0.01 * total_num);
+total_num = length(times_average); % find the total number of points
+int_num = round(0.01 * total_num); % each inerval is 10% of the total number of points
 
-% vector to store time for each interval 
+% vector which defines the indexes for all intervals 
 mean_points = 1:int_num:total_num;
+
+% store the times at the above indexes (these will be used as the time
+% points for each interval
 times_plot_num = times_average(mean_points);
-% number of intervals to be used for mean calculation
+
+% the number of intervals to be used for mean calculation (steps)
 num_pts_size = length(mean_points);
 
-% blank vector to store x1 amounts at each interval
+% blank vector to store x1 amounts at each step interval
 mean_x1_num = zeros(1, num_pts_size);
 mean_x1_num(1) = x1_average(1);
 
-% blank vector to store x2 amounts at each interval
+% blank vector to store x2 amounts at each step interval
 mean_x2_num = zeros(1, num_pts_size);
 mean_x2_num(1) = x2_average(1);
 
-% blank vector to sore y amounts at each interval
+% blank vector to sore y amounts at each step interval
 mean_y_num = zeros(1, num_pts_size);
 mean_y_num(1) = y_average(1);
 
-% blank vector to store z amounts at each interval
+% blank vector to store z amounts at each step interval
 mean_z_num = zeros(1, num_pts_size); 
 mean_z_num(1) = z_average(1); 
 
@@ -239,28 +246,30 @@ mean_z_num(1) = z_average(1);
 ints_num = [1];
 count_num = 1;
 
-% vector to store interval variances for x1
+% vector to store interval variances for x1 for step intervals
 variances_x1_num = zeros(1, num_pts_size);
 
-% vector to store interval variances for x2
+% vector to store interval variances for x2 for step intervals
 variances_x2_num = zeros(1, num_pts_size);
 
-% vector to store inerval variances for y
+% vector to store inerval variances for y for step intervals
 variances_y_num = zeros(1, num_pts_size);
 
-% vector to store interval variances for z
+% vector to store interval variances for z for step intervals
 variances_z_num = zeros(1, num_pts_size);
 
 for ints = int_num:int_num:total_num % generates mean and variance for each interval
-    count_num = count_num+1;
-    ints_num = [ints_num ints];
+    count_num = count_num+1; % increment the counter (started at 1)
+    ints_num = [ints_num ints];% add th current interval to the list
     
-    allx1s_num = x1_average(ints_num(count_num-1): ints_num(count_num)); % all x1 amounts in the range
-    allx2s_num = x2_average(ints_num(count_num-1): ints_num(count_num)); % all x2 amounts in the range
-    allys_num = y_average(ints_num(count_num-1): ints_num(count_num)); % all y amounts in the range
-    allzs_num = z_average(ints_num(count_num-1): ints_num(count_num)); % all z amounts in the range
+    % the ranges defined below are all the points in the current interval
+    % as defined by the cutoff vaues in ints_num 
+    allx1s_num = x1_average(ints_num(count_num-1): ints_num(count_num)); % all x1 amounts in the step range
+    allx2s_num = x2_average(ints_num(count_num-1): ints_num(count_num)); % all x2 amounts in the step range
+    allys_num = y_average(ints_num(count_num-1): ints_num(count_num)); % all y amounts in the step range
+    allzs_num = z_average(ints_num(count_num-1): ints_num(count_num)); % all z amounts in the step range 
     
-    amt_between = length(allx1s_num); % the number of times in the range
+    amt_between = length(allx1s_num); % the number of values in the above range
     
     % calculations for means
     mean_x1_num(count_num) = mean(allx1s_num); % average of x1 amounts in the range
@@ -286,6 +295,9 @@ for ints = int_num:int_num:total_num % generates mean and variance for each inte
 end
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Plot all points, as well as mean calculated using time intervals
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 figure(2)
 
@@ -335,18 +347,21 @@ axis ([0 inf 0 inf])
 hold on
 
 
-disp('Variance X1') % prints overall variance for x1
+disp('Variance X1 - Time') % prints overall variance for x1
 disp(mean(variances_x1)) % variance x1 is mean of variances from each interval
 
-disp('Variance X2') % prints overall vaiance for x2
+disp('Variance X2 - Time') % prints overall vaiance for x2
 disp(mean(variances_x2)) % variance x2 is mean of variances from each interval
 
-disp('Variance Y') % prints overall variance for y
+disp('Variance Y - Time') % prints overall variance for y
 disp(mean(variances_y)) % variance y is mean of variances from each interval
 
-disp('Variance Z') % prints overall variane for z
+disp('Variance Z - Time') % prints overall variane for z
 disp(mean(variances_z)) % variance z is mean of variances from each interval
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Plot all points as well as mean calculated using step intervals
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 figure(3)
 
@@ -354,7 +369,7 @@ figure(3)
 subplot(2,2,1)
 plot(times_average, x1_average, 'b') % plots all points from all simulations
 hold on
-plot(times_plot_num,mean_x1_num, 'k', 'LineWidth', 3) % plots mean point in each time interval
+plot(times_plot_num,mean_x1_num, 'k', 'LineWidth', 3) % plots mean point in each steps interval
 hold on
 title('Average X1 Amount vs Time (Step Intervals)')
 xlabel('Time')
@@ -366,7 +381,7 @@ hold on
 subplot(2,2,2)
 plot(times_average, x2_average, 'r') % plots all points from all simulations
 hold on
-plot(times_plot_num, mean_x2_num, 'k', 'LineWidth', 3) % plots mean point in each interval
+plot(times_plot_num, mean_x2_num, 'k', 'LineWidth', 3) % plots mean point in each steps interval
 title('Average X2 Amount vs Time (Step Intervals)') 
 xlabel ('Time')
 ylabel('X2 Amount')
@@ -377,7 +392,7 @@ hold on
 subplot(2,2,3)
 plot(times_average ,y_average, 'g') % plots all points from all simulations
 hold on
-plot(times_plot_num, mean_y_num, 'k', 'LineWidth', 3) % plots average point in each interval
+plot(times_plot_num, mean_y_num, 'k', 'LineWidth', 3) % plots average point in each steps interval
 title('Average Y Amount vs Time (Step Intervals)')
 xlabel('Time')
 ylabel('Y Amount')
@@ -388,7 +403,7 @@ hold on
 subplot(2,2,4)
 plot(times_average ,z_average, 'c') % plots all points from all simulations
 hold on
-plot(times_plot_num, mean_z_num, 'k', 'LineWidth', 3) % plots average point in each interval
+plot(times_plot_num, mean_z_num, 'k', 'LineWidth', 3) % plots average point in each steps interval
 title('Average Z Amount vs Time (Step Intervals)')
 xlabel('Time')
 ylabel('Z Amount')
@@ -396,17 +411,17 @@ axis ([0 inf 0 inf])
 hold on
 
 
-disp('Variance X1') % prints overall variance for x1
-disp(mean(variances_x1_num)) % variance x1 is mean of variances from each interval
+disp('Variance X1 - Steps') % prints overall variance for x1
+disp(mean(variances_x1_num)) % variance x1 is mean of variances from each steps interval
 
-disp('Variance X2') % prints overall vaiance for x2
-disp(mean(variances_x2_num)) % variance x2 is mean of variances from each interval
+disp('Variance X2 - Steps') % prints overall vaiance for x2
+disp(mean(variances_x2_num)) % variance x2 is mean of variances from each steps interval
 
-disp('Variance Y') % prints overall variance for y
-disp(mean(variances_y_num)) % variance y is mean of variances from each interval
+disp('Variance Y - Steps') % prints overall variance for y
+disp(mean(variances_y_num)) % variance y is mean of variances from each steps interval
 
-disp('Variance Z') % prints overall variane for z
-disp(mean(variances_z_num)) % variance z is mean of variances from each interval
+disp('Variance Z - Steps') % prints overall variane for z
+disp(mean(variances_z_num)) % variance z is mean of variances from each steps interval
 
 
 toc
