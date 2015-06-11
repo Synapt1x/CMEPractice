@@ -40,3 +40,4 @@
 | June 10, 2015 | Ella | Revision | genEis | Master | Separated the values for numSpecies and numRx | Test with a higher number of species and reactions |
 | June 10, 2015 | Ella | Revision | SSATestTauAverages, genEis | Master | Make changes so the program is comaptible with any number of reactions and species | Testing with greater than 4 reactions and species |
 | June 11, 2015 | Ella | Revision | SSATestTauAverages | Master | Add calculations and plotting  for a moving mean using set time intervals | Variance calculations. Moving mean using set number of points. Testing for longer time periods|
+| June 11, 2015 | Ella | New File | SSATestMultiSims | Master | Calculations for variances added over fixed time intervals | Calculate mean and variance using fixed number of steps |
