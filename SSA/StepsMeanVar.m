@@ -1,4 +1,4 @@
-function [mean_xs_num, variances_xs_num, times_plot_num] = StepsMeanVar(times_average, num_species, x1_average, x2_average, y_average, z_average)
+function [mean_xs_num, variances_xs_num, times_plot_num, st_dev_pos, st_dev_neg] = StepsMeanVar(times_average, num_species, x1_average, x2_average, y_average, z_average)
 
 total_num = length(times_average); % find the total number of points
 int_num = round(0.0025 * total_num); % each inerval is 10% of the total number of points
@@ -27,6 +27,9 @@ count_num = 1;
 % vector to store interval variances for x1 for step intervals
 variances_xs_num = zeros(num_species, num_pts_size);
 
+st_dev_pos = zeros(num_species, num_pts_size);
+st_dev_neg = zeros(num_species, num_pts_size);
+
 for ints = int_num:int_num:total_num % generates mean and variance for each interval
     count_num = count_num+1; % increment the counter (started at 1)
     ints_num = [ints_num ints];% add th current interval to the list
@@ -48,15 +51,24 @@ for ints = int_num:int_num:total_num % generates mean and variance for each inte
     % that interval. The variances for x1, x2, y and z are calculated
     % separately
     varsX1_num = ((allx1s_num-mean_xs_num(1,count_num)).^2)./amt_between;
-    
-    
     varsX2_num = ((allx2s_num-mean_xs_num(2,count_num)).^2)./amt_between;
-
-    
     varsY_num = ((allys_num-mean_xs_num(3,count_num)).^2)./amt_between;
-  
     varsZ_num = ((allzs_num-mean_xs_num(4,count_num)).^2)./amt_between;
 
-    
     variances_xs_num(:,count_num) = [sum(varsX1_num) sum(varsX2_num) sum(varsY_num) sum(varsZ_num)];
+    
+    st_dev_pos(1,count_num) = mean_xs_num(1,count_num) + sqrt(sum(varsX1_num));
+    st_dev_pos(2,count_num) = mean_xs_num(2,count_num) + sqrt(sum(varsX2_num));
+    st_dev_pos(3,count_num) = mean_xs_num(3,count_num) + sqrt(sum(varsY_num));
+    st_dev_pos(4,count_num) = mean_xs_num(4,count_num) + sqrt(sum(varsZ_num));
+    
+    
+    st_dev_neg(1,count_num) = mean_xs_num(1,count_num) - sqrt(sum(varsX1_num));
+    st_dev_neg(2,count_num) = mean_xs_num(2,count_num) - sqrt(sum(varsX2_num));
+    st_dev_neg(3,count_num) = mean_xs_num(3,count_num) - sqrt(sum(varsY_num));
+    st_dev_neg(4,count_num) = mean_xs_num(4,count_num) - sqrt(sum(varsZ_num));
+
 end
+
+st_dev_pos(:,1) = st_dev_pos(:,2);
+st_dev_neg(:,1) = st_dev_neg(:,
