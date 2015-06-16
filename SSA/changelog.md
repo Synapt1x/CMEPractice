@@ -48,3 +48,4 @@
 | June 15, 2015 | Ella | New File | SSATestMultiSimsSteps | Master | Calculates mean and varaince using step intervals only | Testing for longer simulation numbers |
 | June 15, 2015 | Ella | New File and Revision | SSATestMultiSimsStDev, StepsMeanVar | Master | Add calculations and plotting for mean +/- standard deviation | Adding more reactions and species |
 | June 16, 2015 | Ella | Revision | SSATestMultiSimsStDev, StepsMeanVar, genRj, initializeParameters | Master | Add a fifth species | Add additinal reactions |
+| June 16, 2015 | Ella | Revision | SSATestMultiSimsStDev | Master | Add loops for plotting means and variances to increase speed | |
