@@ -12,11 +12,11 @@ function [Rjs, aj, a_0] = genRj (X0, V, nc, numRxns)
 species1 = X0(1); % amount of x1
 species2 = X0(2); % amount of x2
 species3 = X0(3); % amount of y
-
+species5 = X0(5);
 % find ajs for each reaction and store in a vector. These need to be
 % changes based on the reactions defined in initializeParameters. Each aj
 % is the partial derivative of that reaction
-aj = [0.00001*species1*species2 0.0001*species1*species3 0.5*0.0001*species2*(species2-1) 0.0001*species3];
+aj = [0.00001*species1 0.0001*species1*species3 0.5*0.000001*species2*(species2-1) 0.0001*species3*species5];
 %aj = single(all_rxns(species1,species2,species3));
 a_0 = sum(aj); 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
