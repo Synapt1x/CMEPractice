@@ -141,82 +141,30 @@ q_average = B(6,:);
 
 figure(1)
 
-% first plot displays average x1 amount vs time
-subplot(3,2,1)
-plot(times_plot_num, st_dev_pos(1,:), 'b') % plots all points from all simulations
-hold on
-plot(times_plot_num, mean_xs_num(1,:), 'k', 'LineWidth', 3) % plots mean point in each steps interval
-hold on
-plot(times_plot_num, st_dev_neg(1,:), 'b')
-hold on
-title('Average X1 Amount vs Time (Step Intervals)')
-xlabel('Time')
-ylabel('X1 Amount')
-axis([0 inf 0 inf])
-hold on
+colours = {'b', 'g', 'c', 'r', 'm'};
+titles = {'X1 vs Time', 'X2 vs Time', 'Y vs Time', 'Z vs Time', 'Q vs Time'};
+Ylabs = {'X1', 'X2', 'Y', 'Z', 'Q'};
 
-% second plot displays x2 amount vs time
-subplot(3,2,2)
-plot(times_plot_num, st_dev_pos(2,:),'r') % plots all points from all simulations
-hold on
-plot(times_plot_num, mean_xs_num(2,:), 'k', 'LineWidth', 3) % plots mean point in each steps interval
-hold on
-plot(times_plot_num, st_dev_neg(2,:), 'r')
-title('Average X2 Amount vs Time (Step Intervals)') 
-xlabel ('Time')
-ylabel('X2 Amount')
-axis([0 inf 0 inf])
-hold on
+for pl = 1:num_species
+    subplot(3,2,pl)
+    plot(times_plot_num, st_dev_pos(pl,:), colours{pl}) % plots all points from all simulations
+    hold on
+    plot(times_plot_num, mean_xs_num(pl,:), 'k', 'LineWidth', 3) % plots mean point in each steps interval
+    hold on
+    plot(times_plot_num, st_dev_neg(pl,:), colours{pl})
+    hold on
+    title(titles{pl})
+    xlabel('Time')
+    ylabel(Ylabs{pl})
+    axis([0 inf 0 inf])
+    hold on
+end
 
-% third plot displays y amount vs time
-subplot(3,2,3)
-plot(times_plot_num,st_dev_pos(3,:), 'g') % plots all points from all simulations
-hold on
-plot(times_plot_num, mean_xs_num(3,:), 'k', 'LineWidth', 3) % plots average point in each steps interval
-hold on
-plot(times_plot_num, st_dev_neg(3,:), 'g')
-title('Average Y Amount vs Time (Step Intervals)')
-xlabel('Time')
-ylabel('Y Amount')
-axis ([0 inf 0 inf])
-hold on
+varsTitles ={'Variance X1', 'Variance X2', 'Variance Y', 'Variance Z', 'Variance Q'};
 
-% fourth plot displays y amount vs time
-subplot(3,2,4)
-plot(times_plot_num ,st_dev_pos(4,:), 'c') % plots all points from all simulations
-hold on
-plot(times_plot_num, mean_xs_num(4,:), 'k', 'LineWidth', 3) % plots average point in each steps interval
-hold on
-plot(times_plot_num, st_dev_neg(4,:), 'c')
-title('Average Z Amount vs Time (Step Intervals)')
-xlabel('Time')
-ylabel('Z Amount')
-axis ([0 inf 0 inf])
-hold on
-
-subplot(3,2,5)
-plot(times_plot_num ,st_dev_pos(5,:), 'm') % plots all points from all simulations
-hold on
-plot(times_plot_num, mean_xs_num(5,:), 'k', 'LineWidth', 3) % plots average point in each steps interval
-hold on
-plot(times_plot_num, st_dev_neg(5,:), 'm')
-title('Average Q Amount vs Time (Step Intervals)')
-xlabel('Time')
-ylabel('Z Amount')
-axis ([0 inf 0 inf])
-hold on
-
-disp('Variance X1 - Steps') % prints overall variance for x1
-disp(mean(variances_xs_num(1,:))) % variance x1 is mean of variances from each steps interval
-
-disp('Variance X2 - Steps') % prints overall vaiance for x2
-disp(mean(variances_xs_num(2,:))) % variance x2 is mean of variances from each steps interval
-
-disp('Variance Y - Steps') % prints overall variance for y
-disp(mean(variances_xs_num(3,:))) % variance y is mean of variances from each steps interval
-
-disp('Variance Z - Steps') % prints overall variane for z
-disp(mean(variances_xs_num(4,:))) % variance z is mean of variances from each steps interval
-
+for varct = 1:num_species
+    disp(varsTitles{varct})
+    disp(mean(variances_xs_num(varct,:)))
+end
 
 toc
