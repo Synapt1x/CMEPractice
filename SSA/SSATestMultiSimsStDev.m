@@ -10,7 +10,7 @@ tic
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % user chooses how many simulations to run
-num_sims = 200;
+num_sims = 100;
 
 % user chooses the maximum time for each simulation
 max_rx = 100;
@@ -129,20 +129,20 @@ x1_average = B(2,:); % extract row with all X1 amounts
 x2_average = B(3,:); % extract row with all X2 amounts
 y_average = B(4,:); % extract row with all y amounts
 z_average = B(5,:); % extract row with all x amounts
-
+q_average = B(6,:);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % calculations and plotting for moving average (mean) with number of points
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 [mean_xs_num, variances_xs_num, times_plot_num, st_dev_pos, st_dev_neg] = StepsMeanVar(times_average,...
-    num_species, x1_average, x2_average, y_average, z_average);
+    num_species, x1_average, x2_average, y_average, z_average, q_average);
 
 
 figure(1)
 
 % first plot displays average x1 amount vs time
-subplot(2,2,1)
+subplot(3,2,1)
 plot(times_plot_num, st_dev_pos(1,:), 'b') % plots all points from all simulations
 hold on
 plot(times_plot_num, mean_xs_num(1,:), 'k', 'LineWidth', 3) % plots mean point in each steps interval
@@ -156,7 +156,7 @@ axis([0 inf 0 inf])
 hold on
 
 % second plot displays x2 amount vs time
-subplot(2,2,2)
+subplot(3,2,2)
 plot(times_plot_num, st_dev_pos(2,:),'r') % plots all points from all simulations
 hold on
 plot(times_plot_num, mean_xs_num(2,:), 'k', 'LineWidth', 3) % plots mean point in each steps interval
@@ -169,7 +169,7 @@ axis([0 inf 0 inf])
 hold on
 
 % third plot displays y amount vs time
-subplot(2,2,3)
+subplot(3,2,3)
 plot(times_plot_num,st_dev_pos(3,:), 'g') % plots all points from all simulations
 hold on
 plot(times_plot_num, mean_xs_num(3,:), 'k', 'LineWidth', 3) % plots average point in each steps interval
@@ -182,7 +182,7 @@ axis ([0 inf 0 inf])
 hold on
 
 % fourth plot displays y amount vs time
-subplot(2,2,4)
+subplot(3,2,4)
 plot(times_plot_num ,st_dev_pos(4,:), 'c') % plots all points from all simulations
 hold on
 plot(times_plot_num, mean_xs_num(4,:), 'k', 'LineWidth', 3) % plots average point in each steps interval
@@ -194,6 +194,17 @@ ylabel('Z Amount')
 axis ([0 inf 0 inf])
 hold on
 
+subplot(3,2,5)
+plot(times_plot_num ,st_dev_pos(5,:), 'm') % plots all points from all simulations
+hold on
+plot(times_plot_num, mean_xs_num(5,:), 'k', 'LineWidth', 3) % plots average point in each steps interval
+hold on
+plot(times_plot_num, st_dev_neg(5,:), 'm')
+title('Average Q Amount vs Time (Step Intervals)')
+xlabel('Time')
+ylabel('Z Amount')
+axis ([0 inf 0 inf])
+hold on
 
 disp('Variance X1 - Steps') % prints overall variance for x1
 disp(mean(variances_xs_num(1,:))) % variance x1 is mean of variances from each steps interval
