@@ -47,3 +47,4 @@
 | June 15, 2015 | Ella | New Files | SSATestMultiSimsFn, TimeMeanVar, StepsMeanVar | Master | Main program uses function to evaluate means and variacnes with step and time intervals | Testing for larger number of simulations |
 | June 15, 2015 | Ella | New File | SSATestMultiSimsSteps | Master | Calculates mean and varaince using step intervals only | Testing for longer simulation numbers |
 | June 15, 2015 | Ella | New File and Revision | SSATestMultiSimsStDev, StepsMeanVar | Master | Add calculations and plotting for mean +/- standard deviation | Adding more reactions and species |
+| June 16, 2015 | Ella | Revision | SSATestMultiSimsStDev, StepsMeanVar, genRj, initializeParameters | Master | Add a fifth species | Add additinal reactions |
