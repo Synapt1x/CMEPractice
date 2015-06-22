@@ -1,4 +1,4 @@
-function SSATestImplicit
+function SSATestMultiSimsStDev
 tic
 %{
 Programmed by: Ella Thomson
@@ -79,8 +79,7 @@ for n = 1:num_sims % loop through all simulations. Plot after each sim
                 % prime
                 [X0] = amountChanges(X0, aj, V, num_rx, tau, Rjs);
    
-                [X0] = ImplicitXX(X, V, X0, tau, num_rx);
-                
+                [X0] = ImplicitXX(X, X0, tau, num_rxns);
                 time = time + tau; % find new time by adding tau to previous time
                 if time > max_rx
                     time = max_rx +0.1;
@@ -94,8 +93,6 @@ for n = 1:num_sims % loop through all simulations. Plot after each sim
                 % amount each species changes if tau is tau double prime
                 % (only one critical reaction can occur)
                 [X0] = amountChangesDouble(X0, aj, V, tau, Rjs, num_rx);
-                
-                [X0] = ImplicitXX(X, V, X0, tau, num_rx);
                 time = time + tau; % find new time by adding tau to previous time
                 % if time is greater than the max time, correct it 
                 if time > max_rx
