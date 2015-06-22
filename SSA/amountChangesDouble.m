@@ -3,7 +3,7 @@ function [X0] = amountChangesDouble(X0, aj, V, tau, Rjs, numRxns)
 Calculates changes in the amounts of all species. Selects one critical
 reaction to occur once. All other critical reactions occur 0 times in time
 tau. The number of non-critical reactions is determined by poisson distributd
-random numbers
+random numbers!
 %}
 
 %numRxns = 3;
