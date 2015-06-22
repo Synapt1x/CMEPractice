@@ -1,26 +1,33 @@
-function [X0] = ImplicitXX(X, V, tau, num_rxns)
+function [X] = ImplicitXX(X, V, tau, num_rxns)
 
+% xnew is an initial guess for the species amounts
 xnew = X(end, :);
+
+% xold is the species amounts at the previous time step 
 xold = X(end-1, :);
 
-while (diff >=criteria)
-    % generate the first term
+% maximum tolerance between subsequent estimates
+criteria = 10;
+diff = cirteria + 1;
+
+while (diff >=criteria) % loop through new estimates of X(t+tau)
+    % generate the first term for implicit X generation
     firstTerm = xold; 
     
     % Generate the second term
-    ajsec = ImplicitAj(xnew);
-    secondTermint = [];
+    ajsec = ImplicitAj(xnew); % evaluate aj with X(t + tau) 
+    secondTermint = []; % vector to store esti
     for sec = 1:num_rxns
-        interSec = ajsec(sec) * V(sec, :) * tau;
+        interSec = ajsec(sec) * V(sec, :) * tau; 
         secondTermint = [secondTerm; interSec] ;
     end
-    secondTerm = sum(secondTermint);
+    secondTerm = sum(secondTermint); % produce a vector of changes to X
     
     % generate the third term 
-    ajthird = ImplicitAj(xold);
+    ajthird = ImplicitAj(xold); % generate aj at x(t)
     thirdTermInt = [];
     for thir = 1: num_rxns
-        thirdFirst = poissrnd(ajthird(thir) * tau);
+        thirdFirst = poissrnd(ajthird(thir) * tau); 
         thirdSecond = aj(thir) * tau;
         interThird = V(thir, :) * (thirdFirst - thirdSecond);
         thirdTermInt = [thirdTermInt ; interThird];
@@ -28,4 +35,11 @@ while (diff >=criteria)
     thirdTerm = sum(thirdTermInt); 
     
     xupdate = firstTerm + secondTerm + thirdTerm;
-    diff = 
+    intdiff = ((xupdate - xnew)./(xupdate)) *100;
+    diff = mean(intdiff);
+    xnew = xupdate;
+end
+
+
+X(end, :) = xnew;
+
