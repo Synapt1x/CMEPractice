@@ -1,0 +1,31 @@
+function [X0] = ImplicitXX(X, V, tau, num_rxns)
+
+xnew = X(end, :);
+xold = X(end-1, :);
+
+while (diff >=criteria)
+    % generate the first term
+    firstTerm = xold; 
+    
+    % Generate the second term
+    ajsec = ImplicitAj(xnew);
+    secondTermint = [];
+    for sec = 1:num_rxns
+        interSec = ajsec(sec) * V(sec, :) * tau;
+        secondTermint = [secondTerm; interSec] ;
+    end
+    secondTerm = sum(secondTermint);
+    
+    % generate the third term 
+    ajthird = ImplicitAj(xold);
+    thirdTermInt = [];
+    for thir = 1: num_rxns
+        thirdFirst = poissrnd(ajthird(thir) * tau);
+        thirdSecond = aj(thir) * tau;
+        interThird = V(thir, :) * (thirdFirst - thirdSecond);
+        thirdTermInt = [thirdTermInt ; interThird];
+    end
+    thirdTerm = sum(thirdTermInt); 
+    
+    xupdate = firstTerm + secondTerm + thirdTerm;
+    diff = 
