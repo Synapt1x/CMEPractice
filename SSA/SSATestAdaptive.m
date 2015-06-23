@@ -1,4 +1,4 @@
-function SSATestImplicit
+function SSATestAdaptive
 tic
 %{
 Programmed by: Ella Thomson
