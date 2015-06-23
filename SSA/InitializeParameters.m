@@ -23,4 +23,3 @@ num_species = 5; % the number of species involved in all reactions
 
 
 
-
